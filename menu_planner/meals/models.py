@@ -15,6 +15,7 @@ class Meal(models.Model):
         ordering = ['date', '-type']
 
 class MealItem(models.Model):
+    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     type = models.CharField(
         choices = [
@@ -24,4 +25,4 @@ class MealItem(models.Model):
         ],
         max_length = 10
     )
-    diets = models.JSONField()
+    diets = models.JSONField(default=list)
