@@ -25,4 +25,6 @@ class MealItem(models.Model):
         ],
         max_length = 10
     )
-    diets = models.JSONField(default=list)
+    is_dairy_free = models.BooleanField(default=False)
+    is_gluten_free = models.BooleanField(default=False)
+    is_vegetarian = models.BooleanField(default=False)
