@@ -33,9 +33,9 @@ class MealItem(models.Model):
         ],
         max_length = 10,
     )
-    is_dairy_free = models.BooleanField(default=False)
-    is_gluten_free = models.BooleanField(default=False)
-    is_vegetarian = models.BooleanField(default=False)
+    is_dairy_free = models.BooleanField(default=False, verbose_name='D', help_text='Dairy Free')
+    is_gluten_free = models.BooleanField(default=False, verbose_name='G', help_text='Gluten Free')
+    is_vegetarian = models.BooleanField(default=False, verbose_name='V', help_text='Vegetarian')
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
