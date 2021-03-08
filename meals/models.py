@@ -7,7 +7,15 @@ class Meal(models.Model):
             ('lunch', 'Lunch'),
             ('dinner', 'Dinner'),
         ],
-        max_length = 10
+        max_length = 10,
+    )
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        editable=False,
     )
 
     class Meta:
@@ -23,6 +31,16 @@ class MealItem(models.Model):
             ('side', 'Side'),
             ('other', 'Other'),
         ],
-        max_length = 10
+        max_length = 10,
     )
-    diets = models.JSONField(default=list)
+    is_dairy_free = models.BooleanField(default=False, verbose_name='D', help_text='Dairy Free')
+    is_gluten_free = models.BooleanField(default=False, verbose_name='G', help_text='Gluten Free')
+    is_vegetarian = models.BooleanField(default=False, verbose_name='V', help_text='Vegetarian')
+    created_at = models.DateTimeField(
+        auto_now_add=True,
+        editable=False,
+    )
+    updated_at = models.DateTimeField(
+        auto_now=True,
+        editable=False,
+    )
