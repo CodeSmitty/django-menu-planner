@@ -25,3 +25,8 @@ python manage.py createsuperuser
 ```
 python manage.py runserver
 ```
+
+### Seed test data
+```
+python manage.py seed_meals
+```

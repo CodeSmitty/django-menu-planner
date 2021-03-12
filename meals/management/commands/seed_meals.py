@@ -10,10 +10,11 @@ class Command(BaseCommand):
     help = 'Inserts test data'
 
     def handle(self, *args, **options):
-        Meal.objects.all().delete()
+        start_of_this_week = start_of_week()
+        start_of_next_week = start_of_this_week + datetime.timedelta(weeks=1)
 
-        date = start_of_week()
-        for _ in range(7):
+        date = start_of_this_week - datetime.timedelta(weeks=1)
+        while date < start_of_next_week:
             add_meal(date=date, type="lunch")
             add_meal(date=date, type="dinner")
 
@@ -25,10 +26,12 @@ def start_of_week(date=datetime.date.today()):
 
 
 def add_meal(date, type):
-    meal = Meal.objects.create(date=date, type=type)
-    add_entre(meal)
-    add_side(meal)
-    add_side(meal)
+    meal, created = Meal.objects.get_or_create(date=date, type=type)
+
+    if created:
+        add_entre(meal)
+        add_side(meal)
+        add_side(meal)
 
 
 def add_entre(meal):
