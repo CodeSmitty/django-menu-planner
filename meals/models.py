@@ -25,7 +25,7 @@ class Meal(models.Model):
 
 
 class MealItem(models.Model):
-    meal = models.ForeignKey(Meal, on_delete=models.CASCADE)
+    meal = models.ForeignKey(Meal, related_name='items', on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     type = models.CharField(
         choices=[
