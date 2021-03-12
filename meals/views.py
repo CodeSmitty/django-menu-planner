@@ -1,3 +1,10 @@
 from django.shortcuts import render
+from rest_framework import viewsets
 
-# Create your views here.
+from .models import Meal
+from .serializers import MealSerializer
+
+
+class MealViewSet(viewsets.ModelViewSet):
+    queryset = Meal.objects.all()
+    serializer_class = MealSerializer
