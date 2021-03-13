@@ -4,8 +4,11 @@ from .dates import today, week_range
 
 
 class MealManager(models.Manager):
-    def week_of(self, date=today()):
+    def week_of(self, date):
         return self.filter(date__range=week_range(date))
+
+    def current_week(self):
+        return self.week_of(today())
 
 
 class Meal(models.Model):

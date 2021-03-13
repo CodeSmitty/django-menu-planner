@@ -5,7 +5,7 @@ def today():
     return datetime.date.today()
 
 
-def next_day(date=today()):
+def next_day(date):
     return date + datetime.timedelta(days=1)
 
 
