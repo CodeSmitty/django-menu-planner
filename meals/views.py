@@ -6,5 +6,5 @@ from .serializers import MealSerializer
 
 
 class MealViewSet(viewsets.ModelViewSet):
-    queryset = Meal.objects.all()
+    queryset = Meal.objects.week_of()
     serializer_class = MealSerializer

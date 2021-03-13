@@ -1,5 +1,12 @@
 from django.db import models
 
+from .dates import today, week_range
+
+
+class MealManager(models.Manager):
+    def week_of(self, date=today()):
+        return self.filter(date__range=week_range(date))
+
 
 class Meal(models.Model):
     date = models.DateField(db_index=True)
@@ -18,6 +25,7 @@ class Meal(models.Model):
         auto_now=True,
         editable=False,
     )
+    objects = MealManager()
 
     class Meta:
         unique_together = ['date', 'type']
@@ -25,7 +33,8 @@ class Meal(models.Model):
 
 
 class MealItem(models.Model):
-    meal = models.ForeignKey(Meal, related_name='items', on_delete=models.CASCADE)
+    meal = models.ForeignKey(Meal, related_name='items',
+                             on_delete=models.CASCADE)
     name = models.CharField(max_length=100)
     type = models.CharField(
         choices=[
