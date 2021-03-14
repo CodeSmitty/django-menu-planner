@@ -1,14 +1,11 @@
 from django.db import models
 
-from .dates import today, week_range
+from .dates import week_range
 
 
-class MealManager(models.Manager):
+class MealQuerySet(models.QuerySet):
     def week_of(self, date):
         return self.filter(date__range=week_range(date))
-
-    def current_week(self):
-        return self.week_of(today())
 
 
 class Meal(models.Model):
@@ -28,7 +25,7 @@ class Meal(models.Model):
         auto_now=True,
         editable=False,
     )
-    objects = MealManager()
+    objects = MealQuerySet.as_manager()
 
     class Meta:
         unique_together = ['date', 'type']
