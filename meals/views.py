@@ -1,9 +1,14 @@
 from django.shortcuts import render
 from rest_framework import viewsets
 
-from .models import Meal
+from .models import Menu, Meal
 from .pagination import MealPagination
-from .serializers import MealSerializer
+from .serializers import MenuSerializer, MealSerializer
+
+
+class MenuViewSet(viewsets.ReadOnlyModelViewSet):
+    queryset = Menu.objects.all()
+    serializer_class = MenuSerializer
 
 
 class MealViewSet(viewsets.ReadOnlyModelViewSet):

@@ -4,6 +4,7 @@ from rest_framework.routers import DefaultRouter
 from meals import views
 
 router = DefaultRouter()
+router.register(r'menus', views.MenuViewSet)
 router.register(r'meals', views.MealViewSet)
 
 urlpatterns = [
