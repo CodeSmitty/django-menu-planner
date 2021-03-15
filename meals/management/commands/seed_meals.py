@@ -2,7 +2,7 @@ import random
 
 from django.core.management.base import BaseCommand
 
-from meals.models import Meal, MealItem
+from meals.models import Menu, Meal, MealItem
 from meals.dates import previous_week, end_of_week, next_day
 
 
@@ -10,18 +10,20 @@ class Command(BaseCommand):
     help = 'Inserts test data'
 
     def handle(self, *args, **options):
+        menu, created = Menu.objects.get_or_create(name='Test Menu')
+
         date = previous_week()
         end_date = end_of_week()
 
         while date <= end_date:
-            add_meal(date=date, type="lunch")
-            add_meal(date=date, type="dinner")
+            add_meal(menu, date, "lunch")
+            add_meal(menu, date, "dinner")
 
             date = next_day(date)
 
 
-def add_meal(date, type):
-    meal, created = Meal.objects.get_or_create(date=date, type=type)
+def add_meal(menu, date, type):
+    meal, created = Meal.objects.get_or_create(menu=menu, date=date, type=type)
 
     if created:
         add_entre(meal)
