@@ -12,6 +12,8 @@ class MenuViewSet(viewsets.ReadOnlyModelViewSet):
 
 
 class MealViewSet(viewsets.ReadOnlyModelViewSet):
-    queryset = Meal.objects.all()
     serializer_class = MealSerializer
     pagination_class = MealPagination
+
+    def get_queryset(self):
+        return Meal.objects.filter(menu=self.kwargs['menu_pk'])
