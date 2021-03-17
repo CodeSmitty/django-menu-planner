@@ -8,3 +8,6 @@ from .serializers import MealSerializer
 class MealViewSet(viewsets.ModelViewSet):
     queryset = Meal.objects.all()
     serializer_class = MealSerializer
+
+def indexView(request):
+    return render(request, 'build/index.html')
