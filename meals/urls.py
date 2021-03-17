@@ -1,13 +1,15 @@
 from django.urls import include, path
-from rest_framework.routers import DefaultRouter
+from rest_framework_nested.routers import SimpleRouter, NestedSimpleRouter
 
-from meals import views
+from .views import MenuViewSet, MealViewSet
 
+router = SimpleRouter()
+router.register(r'menus', MenuViewSet)
 
-router = DefaultRouter()
-router.register(r'meals', views.MealViewSet)
+menu_router = NestedSimpleRouter(router, r'menus', lookup='menu')
+menu_router.register(r'meals', MealViewSet, basename='menu-meals')
 
 urlpatterns = [
     path('api/', include(router.urls)),
-    path('', views.indexView, name='home')
+    path('api/', include(menu_router.urls)),
 ]

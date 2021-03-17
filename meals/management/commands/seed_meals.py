@@ -1,34 +1,34 @@
-import datetime
 import random
 
 from django.core.management.base import BaseCommand
 
-from meals.models import Meal, MealItem
+from meals.models import Menu, Meal, MealItem
+from meals.dates import previous_week, end_of_week, next_day
 
 
 class Command(BaseCommand):
     help = 'Inserts test data'
 
     def handle(self, *args, **options):
-        Meal.objects.all().delete()
+        menu, created = Menu.objects.get_or_create(name='Test Menu')
 
-        date = start_of_week()
-        for _ in range(7):
-            add_meal(date=date, type="lunch")
-            add_meal(date=date, type="dinner")
+        date = previous_week()
+        end_date = end_of_week()
 
-            date += datetime.timedelta(days=1)
+        while date <= end_date:
+            add_meal(menu, date, "lunch")
+            add_meal(menu, date, "dinner")
 
-
-def start_of_week(date=datetime.date.today()):
-    return date - datetime.timedelta(days=date.weekday() + 1)
+            date = next_day(date)
 
 
-def add_meal(date, type):
-    meal = Meal.objects.create(date=date, type=type)
-    add_entre(meal)
-    add_side(meal)
-    add_side(meal)
+def add_meal(menu, date, type):
+    meal, created = Meal.objects.get_or_create(menu=menu, date=date, type=type)
+
+    if created:
+        add_entre(meal)
+        add_side(meal)
+        add_side(meal)
 
 
 def add_entre(meal):
