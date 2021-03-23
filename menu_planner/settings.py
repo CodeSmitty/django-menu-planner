@@ -38,14 +38,20 @@ INSTALLED_APPS = [
     'meals.apps.MealsConfig',
     'django.contrib.admin',
     'django.contrib.auth',
+    'django.contrib.sites',
     'django.contrib.contenttypes',
     'django.contrib.sessions',
     'django.contrib.messages',
     'django.contrib.staticfiles',
-    'rest_framework'
+    'rest_framework',
+    'frontend-meals',
+    'corsheaders'
 ]
 
+SITE_ID =1
+
 MIDDLEWARE = [
+    'corsheaders.middleware.CorsMiddleware',
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',
     'django.middleware.common.CommonMiddleware',
@@ -60,7 +66,7 @@ ROOT_URLCONF = 'menu_planner.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "menu-plannverv3")],
+        'DIRS': [os.path.join(BASE_DIR, "frontend-meals")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -73,8 +79,13 @@ TEMPLATES = [
     },
 ]
 
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://localhost:8000",
+]
+
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'menu-plannverv3', "build", "static"),  # update the STATICFILES_DIRS
+    os.path.join(os.path.join(BASE_DIR, 'frontend-meals'), "build", "static"),  # update the STATICFILES_DIRS
 )
 
 WSGI_APPLICATION = 'menu_planner.wsgi.application'
@@ -128,3 +139,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
+
+
+REST_FRAMEWORK = {
+   
+   'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', ),
+   
+}

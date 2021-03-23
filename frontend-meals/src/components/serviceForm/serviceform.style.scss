@@ -1,0 +1,128 @@
+.body{
+  margin:0;
+  padding:0;
+}
+
+*{
+  box-sizing: border-box;
+}
+.container-box{
+  width:100%;
+  display:flex;
+  flex-flow:column nowrap;
+  margin:auto;
+
+  
+}
+
+.form{
+   margin:0 auto;
+   box-shadow: 1px 1px 10px 1px rgb(167, 167, 167);
+   margin-bottom:50px;
+   padding:20px;
+   width:100%;
+   border-radius: 15px;
+   background-color: ghostwhite;
+}
+
+.svc-type{
+  display: inline-grid;
+  width: 1em;
+  height: 1em;
+  border-radius: 0.25em;
+  border: 0.1em solid currentColor;
+}
+
+.serviceType-checkboxes{
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: flex-end;
+  padding:5px;
+  background-color: ghostwhite;
+}
+
+
+.form-container {
+  display:flex;
+  flex-flow:column nowrap;
+  justify-content: flex-start;
+  
+  
+}
+
+.entre-form{
+ padding:5px;
+ display:flex;
+ justify-content: flex-start;
+}
+
+.input-element-wrapper{
+  width:100%;
+  display: flex;
+  justify-content: flex-start;
+  padding:5px 0;
+}
+
+.input-text, .description{
+  height:30px;
+  width:90%;
+  border-radius: 3px;
+  border:none;
+  border-bottom: 2px solid rgb(10, 10, 10);
+  background: transparent;
+}
+
+
+.submit-btn{
+ background-color: #000;
+  border-radius: 4rem;
+  color: #fff;
+  cursor: pointer;
+  display: inline-block;
+  font-family: 'Poppins', sans-serif;
+  font-size: 1rem;
+  font-weight: 700;
+  height: 2rem;
+  padding-left: 1rem;
+  padding-right: 1rem;
+  transition: background-color 0.3s;
+
+}
+
+
+
+.diets-checkbox{
+  width:90%;
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: flex-end;
+}
+
+.btn-uploader-wrapper{
+  width:90%;
+  display:flex;
+  flex-flow:row nowrap;
+  justify-content: space-between;
+  padding-top:30px;
+}
+
+
+
+
+
+
+
+
+
+@media all and (max-width: 800px) and (max-width:400px) {
+.form{
+  width:80%;
+}
+.diets-checkbox{
+  width:100%;
+  justify-content: center;
+  margin:0;
+}
+
+ 
+}
