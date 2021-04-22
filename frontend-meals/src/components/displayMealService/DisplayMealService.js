@@ -16,7 +16,6 @@ const DisplayMealService = (props) => {
     glut: glutenLogo,
     dairy: dairyFree,
   };
-  console.log(imageMap)
 
   let imageUrl = props.imgs;
   const style = {

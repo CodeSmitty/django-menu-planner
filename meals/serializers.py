@@ -1,7 +1,6 @@
 from rest_framework import serializers
 
-from .models import Menu, Meal, MealItem
-
+from .models import Menu, Meal, MealItem, UserMenu
 from django.contrib.auth.models import User
 
 
@@ -15,7 +14,7 @@ class MealItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MealItem
         fields = ['name', 'type', 'is_dairy_free',
-                  'is_gluten_free', 'is_vegetarian']
+                  'is_gluten_free', 'is_vegetarian',]
 
 
 class MealSerializer(serializers.ModelSerializer):
@@ -23,21 +22,12 @@ class MealSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = Meal
-        fields = ['id', 'date', 'type', 'items']
+        fields = [ 'id', 'date', 'type', 'items','menu', ]
 
-class UserLoginSerializer(serializers.ModelSerializer):
+class UserMenuSerializer(serializers.ModelSerializer):
+    items = MealSerializer(many=True, read_only=True)
     class Meta:
-        model = User
-        fields = ["id", 'username', 'password']
+        model = UserMenu
+        fields =['user', 'menu', 'id', 'items']
 
-        extra_kwargs = {"password":{
-            'write_only':True,
-            'required':True
-        }
-        
-        }
-
-        def validate(self, data):
-            if data['password'] != data['confirmed_password']:
-                raise serializers.ValidationError("passwords do not match puto")
-            return data
+       

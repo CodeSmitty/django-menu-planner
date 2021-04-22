@@ -152,7 +152,7 @@ const ServiceForm = (props) => {
   return (
     <div className="container-box">
       <form onSubmit={(e) => handleSubmit(e, image)} className="form" action="">
-        <div class="serviceType-checkboxes">
+        <div className="serviceType-checkboxes">
           <input
             className="svc-type"
             onChange={(e) => {

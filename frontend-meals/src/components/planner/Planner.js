@@ -51,8 +51,8 @@ const Planner = () => {
           <div className="form-preview-container">
             <div className="serviceform-container">
               <div className="arrow_and_form_wrapper">
-                <div class="date-arrows">
-                  <div class="date-arrows-wrapper">
+                <div className="date-arrows">
+                  <div className="date-arrows-wrapper">
                     <p className="planner-title">Create Your Meals:</p>
                     <button
                       className="date-btns"

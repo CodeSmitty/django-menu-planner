@@ -1,6 +1,8 @@
 from django.db import models
 
 from .dates import week_range
+from django.contrib.auth.models import User
+
 
 
 class Menu(models.Model):
@@ -17,6 +19,13 @@ class Menu(models.Model):
     def __str__(self):
         return self.name
 
+class UserMenu(models.Model):
+    user = models.ForeignKey(User, on_delete=models.CASCADE, related_name='user_id')
+    name = models.ForeignKey(Menu, on_delete=models.CASCADE, related_name="menu")
+
+    def __str__(self):
+        return self.name.name
+
 
 class MealQuerySet(models.QuerySet):
     def week_of(self, date):
@@ -25,7 +34,7 @@ class MealQuerySet(models.QuerySet):
 
 class Meal(models.Model):
     menu = models.ForeignKey(
-        Menu,
+        UserMenu,
         related_name='meals',
         on_delete=models.CASCADE,
     )
@@ -48,7 +57,7 @@ class Meal(models.Model):
     objects = MealQuerySet.as_manager()
 
     class Meta:
-        unique_together = ['menu', 'date', 'type']
+        unique_together = [ 'date', 'type']
         ordering = ['date', '-type']
 
 
@@ -90,3 +99,9 @@ class MealItem(models.Model):
         auto_now=True,
         editable=False,
     )
+
+
+
+
+
+    

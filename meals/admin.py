@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Menu, Meal, MealItem
+from .models import Menu, Meal, MealItem, UserMenu
 
 
 class MealItemInline(admin.TabularInline):
@@ -14,9 +14,10 @@ class MealAdmin(admin.ModelAdmin):
         MealItemInline,
     ]
     list_display = ('date', 'type')
-    list_filter = ('menu',)
+    # list_filter = ('menu',)
     radio_fields = {'type': admin.HORIZONTAL}
 
 
 admin.site.register(Menu)
 admin.site.register(Meal, MealAdmin)
+admin.site.register(UserMenu)

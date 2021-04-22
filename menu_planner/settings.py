@@ -29,9 +29,7 @@ DEBUG = True
 
 ALLOWED_HOSTS = []
 
-CORS_ALLOWED_ORIGINS = [
-    "http://localhost:3000",
-]
+
 # Application definition
 
 INSTALLED_APPS = [
@@ -45,8 +43,10 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'frontend-meals',
-    'corsheaders'
+    'corsheaders',
+    'user_profile'
 ]
+
 
 SITE_ID =1
 
@@ -62,6 +62,10 @@ MIDDLEWARE = [
 ]
 
 ROOT_URLCONF = 'menu_planner.urls'
+
+# CSRF_COOKIE_SECURE = True
+
+# SESSION_COOKIE_SECURE = True
 
 TEMPLATES = [
     {
@@ -142,7 +146,11 @@ STATIC_URL = '/static/'
 
 
 REST_FRAMEWORK = {
-   
-   'DEFAULT_PERMISSION_CLASSES': ( 'rest_framework.permissions.IsAdminUser', ),
-   
+    'DEFAULT_PERMISSION_CLASSES': [
+        'rest_framework.permissions.IsAuthenticated',
+    ],
+    'DEFAULT_AUTHENTICATION_CLASSES': [
+        'rest_framework.authentication.TokenAuthentication',
+        'rest_framework.authentication.SessionAuthentication',
+    ]
 }
