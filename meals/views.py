@@ -1,17 +1,20 @@
-from django.shortcuts import render, redirect
-from rest_framework import viewsets, permissions
-from django.contrib.auth import authenticate, login
-from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from django.contrib import messages, auth
-from rest_framework.response import Response
-from .models import Menu, Meal,UserMenu, MealItem
-from .pagination import MealPagination
-from .serializers import MenuSerializer, MealSerializer, UserMenuSerializer
-from rest_framework.views import APIView
-from django.utils.decorators import method_decorator
-from django.contrib.auth.models import User 
+from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
-from django.contrib.sessions.models import Session
+from django.contrib.auth.models import User
+# from django.contrib.sessions.models import Session
+
+from django.utils.decorators import method_decorator
+from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
+from django.shortcuts import get_object_or_404, render, redirect
+
+from rest_framework import viewsets, permissions
+from rest_framework.response import Response
+from rest_framework.views import APIView
+
+from .models import Menu, Meal
+from .pagination import MealPagination
+from .serializers import MenuSerializer, MealSerializer
 
 
 class MenuViewSet(viewsets.ReadOnlyModelViewSet):
@@ -19,35 +22,24 @@ class MenuViewSet(viewsets.ReadOnlyModelViewSet):
     serializer_class = MenuSerializer
 
     def get_queryset(self):
-        user_id = self.request.user.id
-        menu = Menu.objects.all()
         if User.is_authenticated:
-           return UserMenu.objects.filter(id=user_id)    
+            return self.request.user.menus.all()
         else:
             print('no esta aqui señor')
 
 
-class MealViewSet(LoginRequiredMixin,viewsets.ReadOnlyModelViewSet):
+class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
     serializer_class = MealSerializer
     pagination_class = MealPagination
 
-    def get_queryset(self ):
+    def get_queryset(self):
         if self.request.user.is_authenticated:
-            user_id = self.request.user.id
-            user_data = UserMenu.objects.filter(user=self.request.user)
-            print(user_data)
-            
-            if user_data.exists():
-                return Meal.objects.filter(menu=user_data[0])
+            queryset = Menu.objects.all()
+            menu = get_object_or_404(
+                queryset, pk=self.kwargs['menu_pk'], users=self.request.user)
+            return Meal.objects.filter(menu=menu)
         else:
-          return Response({"error":"Please Authenticate"})
-        
-
-
-
-
-
-
+            return Response({"error": "Please Authenticate"})
 
 
 # @method_decorator(csrf_protect, name='dispatch')
@@ -77,7 +69,6 @@ class MealViewSet(LoginRequiredMixin,viewsets.ReadOnlyModelViewSet):
 #     return render(request, 'login/login.html', context)
 
 
-
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
     permission_classes = (permissions.AllowAny, )
@@ -90,28 +81,30 @@ class LoginView(APIView):
 
         try:
             user = auth.authenticate(username=username, password=password)
-            
+
             if user is not None:
                 auth.login(request, user)
-                
+
                 redirect("http://localhost:3000/about")
-                return Response({ 'success': 'User authenticated', 'data': user.id })
+                return Response({'success': 'User authenticated', 'data': user.id})
             else:
-                return Response({ 'error': 'Error Authenticating' })
+                return Response({'error': 'Error Authenticating'})
         except:
-            return Response({ 'error': 'Something went wrong when logging in '  })
+            return Response({'error': 'Something went wrong when logging in '})
+
 
 def index(request):
     return render(request, 'build/index.html')
 
+
 def mealQueries(request):
     print('ok')
+
 
 @method_decorator(csrf_protect, name='dispatch')
 class CheckAuthenticatedView(APIView):
     def get(self, request, format=None):
         user = self.request.user
-       
 
         try:
             isAuthenticated = user.is_authenticated
@@ -119,9 +112,9 @@ class CheckAuthenticatedView(APIView):
             if isAuthenticated:
                 return Response({'isAuthenticated': "success", })
             else:
-                return Response({ 'isAuthenticated': 'error' })
+                return Response({'isAuthenticated': 'error'})
         except:
-            return Response({ 'error': 'Something went wrong when checking authentication status' })
+            return Response({'error': 'Something went wrong when checking authentication status'})
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
@@ -129,29 +122,4 @@ class GetCSRFToken(APIView):
     permission_classes = (permissions.AllowAny, )
 
     def get(self, request, format=None):
-        return Response({ 'success': 'CSRF cookie set' })
-
-
-class UserMenuView(viewsets.ReadOnlyModelViewSet):
-    queryset = UserMenu.objects.all()
-    serializer_class = UserMenuSerializer
-
-
-    
-
-
-
-    
-
-        
-
-
-
-        
-
-    
-
-    
-
-    
-    
+        return Response({'success': 'CSRF cookie set'})
