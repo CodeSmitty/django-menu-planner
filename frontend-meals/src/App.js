@@ -9,27 +9,34 @@ import AboutPage from "./components/about/About";
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import Login from './components/login/Login'
 import PrivateRoute from './hoc/PrivateRoute';
+import Layout from "./hoc/Layout"
+import Introduction from "./components/introduction/Introduction";
 
 function App() {
   let routes = (
     <Switch>
-      <Route path="/" exact render={(props) => <Home {...props} />} />
-      <Route path="/about" render={(props) => <AboutPage {...props} />} />
+      <Route exact path="/" render={(props) => <Introduction {...props} />} />
+      <Route exact path="/about" render={(props) => <AboutPage {...props} />} />
+      <Route exact path="/login" render={props =><Login {...props} />} />
     </Switch>
   );
 
   return (
     <div className="App">
-      <Router>
+      
         <Store>
           <AuthStore>
-              <Header />
-              <Route exact path="/login" component={Login} />
-              <PrivateRoute exact path="/planner" component={Planner} />
-            
+            <Router>
+                <Layout>
+                  <Header />
+                  {routes}
+                  <PrivateRoute exact path="/planner" component={Planner} />
+                  <PrivateRoute exact path="/menu" component={Home} />
+                </Layout>
+            </Router> 
           </AuthStore>
         </Store>
-      </Router>
+      
     </div>
   );
 }

@@ -3,6 +3,7 @@ import { Route, Redirect } from "react-router-dom";
 import {useAuthStore} from '../utility/reducers/auth'
 import Login from '../components/login/Login';
 import axios from 'axios'
+import { checkAuthenticated } from "../utility/auth";
 
 
 const PrivateRoute = ({ component, ...options }) => {
@@ -17,19 +18,15 @@ const PrivateRoute = ({ component, ...options }) => {
 
     useEffect(()=>{
         if(state.isAuthenticated){
-            console.log(state)
-                const res =  axios.get("http://localhost:8000/authenticated/", config);
-                
-                if(res.data){
-                    console.log(res)
-                }
-                   
+                checkAuthenticated(dispatch)
             setCheckAuth(true)
         }else(
             setCheckAuth(false)
         )
     },[])
-
+    
+console.log(checkAuth)
+console.log(state.isAuthenticated)
     const finalComponent = state.isAuthenticated ? component : Login;
     // if(!checkAuth) return null;
     return(

@@ -27,7 +27,7 @@ SECRET_KEY = '_^k34)!8q9y$)s2*sb7&ttr%(%xqj-65l8kqeyv!l1oy8a4=#+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = []
+ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost"]
 
 
 # Application definition
@@ -44,7 +44,8 @@ INSTALLED_APPS = [
     'rest_framework',
     'frontend-meals',
     'corsheaders',
-    'user_profile'
+    'user_profile',
+    'rest_framework.authtoken'
 ]
 
 
@@ -150,7 +151,6 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
-        'rest_framework.authentication.TokenAuthentication',
         'rest_framework.authentication.SessionAuthentication',
     ]
 }

@@ -6,6 +6,8 @@ import { Redirect, Link } from "react-router-dom";
 
 import {login} from '../../utility/auth';
 import {useAuthStore} from '../../utility/reducers/auth'
+import axios from 'axios';
+import {checkAuthenticated} from '../../utility/auth'
 
 
 
@@ -26,6 +28,7 @@ const Login = ({  isAuthenticated }) => {
     e.preventDefault();
 
     login(username, password, dispatch);
+    checkAuthenticated(dispatch)
   };
 
 

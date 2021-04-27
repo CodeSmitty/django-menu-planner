@@ -9,6 +9,8 @@ const initialState = {
 const reducer = (state, action) =>{
     
     switch(action.type){
+        case "AUTHENTICATED_SUCCESS":
+          return {...state, isAuthenticated:true}
         case 'LOGIN_SUCCESS':
             return {...state, isAuthenticated:true, user_id:action.payload}
 
@@ -20,7 +22,7 @@ const reducer = (state, action) =>{
 };
 
 
-
+ 
 const AuthStore = ({ children }) => {
   const [state, dispatch] = useReducer(reducer, initialState);
 
