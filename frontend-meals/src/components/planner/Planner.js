@@ -5,17 +5,11 @@ import moment from "moment";
 import "./planner.style.scss";
 import Calendar from "react-calendar";
 import { useStore } from "../../utility/reducers";
-import {useAuthStore} from '../../utility/reducers/auth'
-
-// import "react-calendar/dist/Calendar.css";
 
 const Planner = () => {
   const [date, setDate] = useState(moment());
   const [dateChange, setDateChange] = useState(false);
   const [state, dispatch] = useStore();
-  const [authState, authDispatch] = useAuthStore()
-
- 
 
   const onSelect = (e) => {
     setDate(moment(e));
@@ -81,7 +75,6 @@ const Planner = () => {
                 />
               </div>
               <div className="home-wrapper">
-                {/* <Home /> */}
                 <Preview date={date} />
               </div>
             </div>

@@ -1,31 +1,32 @@
 export const inputFormData = {
   entre: {
     elementType: "input",
+    serviceType: "entre",
     elementConfig: {
       type: "text",
       placeholder: "entre",
     },
     value: "",
     checkbox: {
-      veg: {
+      is_vegetarian: {
         elementType: "checkbox",
         elementConfig: {
-          name: "veg",
+          name: "is_vegetarian",
           type: "checkbox",
         },
       },
-      gluten: {
+      is_gluten_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "glut",
+          name: "is_gluten_free",
           type: "checkbox",
         },
         isChecked: false,
       },
-      dairy: {
+      is_dairy_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "dairy",
+          name: "is_dairy_free",
           type: "checkbox",
         },
         isChecked: false,
@@ -34,30 +35,31 @@ export const inputFormData = {
   },
   sideOne: {
     elementType: "input",
+    serviceType: "side",
     elementConfig: {
       type: "text",
       placeholder: "side one",
     },
     value: "",
     checkbox: {
-      veg: {
+      is_vegetarian: {
         elementType: "checkbox",
         elementConfig: {
-          name: "veg",
+          name: "is_vegetarian",
           type: "checkbox",
         },
       },
-      gluten: {
+      is_gluten_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "glut",
+          name: "is_gluten_free",
           type: "checkbox",
         },
       },
-      dairy: {
+      is_dairy_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "dairy",
+          name: "is_dairy_free",
           type: "checkbox",
         },
       },
@@ -65,30 +67,31 @@ export const inputFormData = {
   },
   sideTwo: {
     elementType: "input",
+    serviceType: "side",
     elementConfig: {
       type: "text",
       placeholder: "side two",
     },
     value: "",
     checkbox: {
-      veg: {
+      is_vegetarian: {
         elementType: "checkbox",
         elementConfig: {
-          name: "veg",
+          name: "is_vegetarian",
           type: "checkbox",
         },
       },
-      gluten: {
+      is_gluten_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "glut",
+          name: "is_gluten_free",
           type: "checkbox",
         },
       },
-      dairy: {
+      is_dairy_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "dairy",
+          name: "is_dairy_free",
           type: "checkbox",
         },
       },
@@ -96,30 +99,31 @@ export const inputFormData = {
   },
   description: {
     elementType: "input",
+    serviceType: "other",
     elementConfig: {
       type: "text",
       placeholder: "description",
     },
     value: "",
     checkbox: {
-      veg: {
+      is_vegetarian: {
         elementType: "checkbox",
         elementConfig: {
-          name: "veg",
+          name: "is_vegetarian",
           type: "checkbox",
         },
       },
-      gluten: {
+      is_gluten_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "glut",
+          name: "is_gluten_free",
           type: "checkbox",
         },
       },
-      dairy: {
+      is_dairy_free: {
         elementType: "checkbox",
         elementConfig: {
-          name: "dairy",
+          name: "is_dairy_free",
           type: "checkbox",
         },
       },

@@ -25,55 +25,56 @@ const DisplayMealService = (props) => {
     backgroundPosition: "center",
   };
 
-  //console.log(props.mealData ?props.mealData[0]?.diets[1].glut : null)
 
   const entre = {
-    value: props.mealData && props.mealData[0] ? props.mealData[0].entre : null,
+    value: props.mealData[0]?.type ==='entre' ? props.mealData[0].name : null,
     glut:
       props.mealData && props.mealData[0]
-        ? props.mealData[0].diets[1].glut
+        ? props.mealData[0].is_gluten_free
         : null,
     veg:
       props.mealData && props.mealData[0]
-        ? props.mealData[0].diets[0].veg
+        ? props.mealData[0]?.is_vegetarian
         : null,
     dairy:
       props.mealData && props.mealData[0]
-        ? props.mealData[0].diets[2].dairy
+        ? props.mealData[0]?.is_dairy_free
         : null,
   };
 
+
+
   const sideOne = {
     value:
-      props.mealData && props.mealData[1] ? props.mealData[1].sideOne : null,
+      props?.mealData[1]?.type ==='side' ? props.mealData[1].name : null,
     glut:
       props.mealData && props.mealData[1]
-        ? props.mealData[1].diets[1].glut
+        ? props.mealData[1].is_gluten_free
         : null,
     veg:
       props.mealData && props.mealData[1]
-        ? props.mealData[1].diets[0].veg
+        ? props.mealData[1]?.is_vegetarian
         : null,
     dairy:
       props.mealData && props.mealData[1]
-        ? props.mealData[1].diets[2].dairy
+        ? props.mealData[1]?.is_dairy_free
         : null,
   };
 
   const sideTwo = {
     value:
-      props.mealData && props.mealData[2] ? props.mealData[2].sideTwo : null,
+      props?.mealData && props?.mealData[2]?.type === 'side' ? props.mealData[2]?.name: null,
     glut:
       props.mealData && props.mealData[2]
-        ? props.mealData[2].diets[1].glut
+        ? props.mealData[2]?.is_gluten_free
         : null,
     veg:
       props.mealData && props.mealData[2]
-        ? props.mealData[2].diets[0].veg
+        ? props.mealData[2]?.is_vegetarian
         : null,
     dairy:
       props.mealData && props.mealData[2]
-        ? props.mealData[2].diets[2].dairy
+        ? props.mealData[2]?.is_dairy_free
         : null,
   };
 
@@ -102,7 +103,7 @@ const DisplayMealService = (props) => {
             }}
             className="entre-text home-entre-text"
           >
-            {props.mealData ? props?.mealData[0]?.entre : null}
+          {entre?.value}
           </p>
           <div className="diets-imgs-container">
             {entreItems?.map((e, i) => {
@@ -114,7 +115,7 @@ const DisplayMealService = (props) => {
         </div>
         <div className="sideOne-container">
           <p className="sideOne-text home-sideOne-text">
-            {props.mealData ? props?.mealData[1]?.sideOne : null}
+            {sideOne?.value}
           </p>
           <div className="diets-imgs-container">
             {sideOneItems?.map((e, i) => (
@@ -124,7 +125,7 @@ const DisplayMealService = (props) => {
         </div>
         <div className="sideTwo-container">
           <p className="sideTwo-text home-sideTwo-text">
-            {props.mealData ? props?.mealData[2]?.sideTwo : null}
+            {sideTwo?.value}
           </p>
           <div className="diest-imgs-container">
             {sideTwoItems?.map((e, i) => (

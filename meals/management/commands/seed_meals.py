@@ -12,7 +12,7 @@ class Command(BaseCommand):
     def add_arguments(self, parser):
         parser.add_argument(
             '--menu',
-            default='Test Menu',
+            default='Sigma Kappa',
             help='Name of the menu to seed',
         )
 

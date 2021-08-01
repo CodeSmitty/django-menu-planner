@@ -1,28 +1,17 @@
-import React, {useEffect, Fragment} from 'react';
+import React, { useEffect, Fragment, useState } from "react";
 import { checkAuthenticated } from "../utility/auth";
-import {useAuthStore} from "../utility/reducers/auth";
-import {Redirect} from 'react-router-dom'
+import { useAuthStore } from "../utility/reducers/auth";
 
+const Layout = ({ children }) => {
+  const [authState, dispatch] = useAuthStore();
 
-const Layout = ({children}) =>{
-    const [authState, dispatch] = useAuthStore()
+  useEffect(() => {
+    (async () => {
+      return await checkAuthenticated(dispatch);
+    })();
+  }, []);
 
-    useEffect(()=>{
-        if(authState.isAuthenticated){
-            console.log('you are logged in.')
-        }else{
-            checkAuthenticated(dispatch)
-        }
-        
-    },[])
-
-    return(
-        
-        <Fragment>
-                {children}
-        </Fragment>
-    )
-}
-
+  return <Fragment>{children}</Fragment>;
+};
 
 export default Layout;

@@ -1,43 +1,42 @@
 import React, { useState, useEffect } from "react";
 import "./serviceform.style.scss";
 import { useStore } from "../../utility/reducers";
+import { useAuthStore } from "../../utility/reducers/auth";
 import ImageSelector from "../imageSelector/ImageSelector";
-//import axios from "../../utility/axios.orders";
 import { inputFormData } from "../../utility/inputElementsData";
-import useSubmitForm from "../../utility/customHooks/useSubmitForm";
 import {
   handleDateFormats,
   handleEditFromData,
   handleValue,
 } from "../../utility/utility.functions";
-import useFetchedDataForm from "../../utility/customHooks/useFetchedData";
+import useFetchedDataForm from "../../utility/customHooks/useApiFetchecData";
+import useApiSubmitForm from "../../utility/customHooks/useApiSubmitForm";
 import Inputs from "./inputs/Inputs";
+import { meals } from "../../utility/djangoApi/djangoApi";
 
 const ServiceForm = (props) => {
   const [state, dispatch] = useStore();
+  const [authState, authDispatch] = useAuthStore();
+  const [menuId, setMenuId] = useState("");
+
   const [image, setImage] = useState(null);
   const [error, setError] = useState("");
-  const [
-    currentWeekStart,
-    currentWeekEnd,
-    weekToDate,
-    yearToDate,
-    currMoment,
-  ] = handleDateFormats(props.dates);
+  const [formData, setFormData] = useState({});
+  const [currentWeekStart, currentWeekEnd, weekToDate, yearToDate, currMoment] =
+    handleDateFormats(props.dates);
 
   const [dataPreview, setDataPreview] = useState();
 
-  const [handleSubmit] = useSubmitForm(props, dispatch);
+  const [handleSubmit] = useApiSubmitForm(props, dispatch);
   const [
     fetchMealData,
     currentMeals,
     retrievedData,
     setRetrievedData,
-    retrieveOnLoadData,
-    retrievedDataForPreview,
+    retrieveDataForFormUpdating,
+    retrivedDataForPreview,
     setRetrievedDataForPreview,
   ] = useFetchedDataForm(currentWeekStart, currentWeekEnd);
-
   const [lunch, setLunch] = useState(false);
   const [dateChange, setDateChange] = useState();
 
@@ -45,25 +44,27 @@ const ServiceForm = (props) => {
     let elArr = [];
 
     Object.keys(dataInput).forEach((el) => {
-      elArr.push({ id: el, inputForm: dataInput[el] });
+      elArr.push({
+        id: el,
+        serviceType: dataInput[el].serviceType,
+        inputForm: dataInput[el],
+      });
     });
     return elArr;
   }
 
-  useEffect(
-    (e) => {
-      fetchMealData(yearToDate, weekToDate);
-      const fetchedData = retrieveOnLoadData(yearToDate, weekToDate);
-      setDataPreview(fetchedData);
-      setDateChange(props.dates);
-    },
-    [props.dates, state]
-  );
+  useEffect(() => {
+    meals(authState.isAuthenticated, authDispatch).then((menuId) => {
+      fetchMealData(authState.isAuthenticated, menuId);
+      retrieveDataForFormUpdating(authState.isAuthenticated, menuId).then(
+        (res) => {
+          setDataPreview(res);
+        }
+      );
+    });
 
-  // if(props.dateChanged === true){
-  //   console.log(props.dateChanged)
-
-  // }
+    setDateChange(props.dates);
+  }, [props.dates, authState.isAuthenticated]);
 
   function handleCheckboxChange(e, data) {
     return dispatch({
@@ -81,52 +82,53 @@ const ServiceForm = (props) => {
       dispatch
     );
 
-    console.log(existedMeals);
     handleValue(e, existedMeals, dispatch, state);
   }
 
-  const handleInputTextChange = (e, data, fetchedData) => {
+  const handleInputTextChange = (e, data, i) => {
     dispatch({
       type: data.id.toUpperCase() + "_TEXT",
       payload: e.target.value,
       servType: data.id,
+      serviceType: data.serviceType,
     });
   };
   //retrievedData ? existedMeals? existedMeals[x.id] :state[x.id].value: state[x.id].value
   let findInputs = findInputElements(inputFormData);
+
   let mapInputs = findInputs.map((x, i) => {
     return (
       <div key={`entre${i}`} className="form-container">
         <div className="entre-form">
           <Inputs
             elementConfig={x.inputForm.elementConfig}
-            value={state[x.id].value}
+            value={state[x.id]?.name}
             name={"entre.value"}
             elType={x.inputForm.elementType}
-            changed={(event) => handleInputTextChange(event, x)}
+            changed={(event) => handleInputTextChange(event, x, i)}
             className="input-text"
           />
         </div>
 
         <div key={`diets${i}`} className="diets-checkbox">
           <Inputs
-            elType={x.inputForm.checkbox?.veg?.elementType}
-            elementConfig={x.inputForm.checkbox?.veg?.elementConfig}
+            elType={x.inputForm.checkbox?.is_vegetarian?.elementType}
+            elementConfig={x.inputForm.checkbox?.is_vegetarian?.elementConfig}
             changed={(event) => handleCheckboxChange(event.target.name, x)}
-            checked={state[x.id].veg}
+            checked={state[x.id]?.is_vegetarian}
           />
           <label>veg</label>
           <Inputs
-            elType={x.inputForm.checkbox?.gluten?.elementType}
-            elementConfig={x.inputForm.checkbox?.gluten?.elementConfig}
+            elType={x.inputForm.checkbox?.is_gluten_free?.elementType}
+            elementConfig={x.inputForm.checkbox?.is_gluten_free?.elementConfig}
             changed={(event) => handleCheckboxChange(event.target.name, x)}
-            checked={state[x.id].glut}
+            checked={state[x.id]?.is_gluten_free}
           />
           <label>gluten</label>
           <Inputs
-            elType={x.inputForm.checkbox?.dairy?.elementType}
-            elementConfig={x.inputForm.checkbox?.dairy?.elementConfig}
-            checked={state[x.id].dairy}
+            elType={x.inputForm.checkbox?.is_dairy_free?.elementType}
+            elementConfig={x.inputForm.checkbox?.is_dairy_free?.elementConfig}
+            checked={state[x.id]?.is_dairy_free}
             changed={(event) => handleCheckboxChange(event.target.name, x)}
           />
           <label>dairy</label>
@@ -151,7 +153,11 @@ const ServiceForm = (props) => {
 
   return (
     <div className="container-box">
-      <form onSubmit={(e) => handleSubmit(e, image)} className="form" action="">
+      <form
+        onSubmit={(e) => handleSubmit(e, image, menuId)}
+        className="form"
+        action=""
+      >
         <div className="serviceType-checkboxes">
           <input
             className="svc-type"
@@ -184,7 +190,7 @@ const ServiceForm = (props) => {
             onClick={(e) => {
               state?.serviceType?.dinner || state?.serviceType?.lunch === true
                 ? handleSubmit(e, image)
-                : alert("Please Select a Service Type");
+                : handleSubmit(e, image);
             }}
           >
             submit

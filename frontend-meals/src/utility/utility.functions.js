@@ -1,11 +1,5 @@
-// import React, { useEffect, useState, useContext } from "react";
-// import firebase from "../utility/firebase.utility";
-// import {storage} from './firebase.utility';
-// import {Context} from './reducers';
 import moment from "moment";
 import FireApi from "./rest.classes";
-//import useFetchedDataForm from "./customHooks/useFetchedData"
-import { useStore } from "./reducers";
 
 export const handleMomentDate = (key, formats) => {
   return moment(key).format(formats);
@@ -42,32 +36,52 @@ export const handleEditFromData = (date, state, data) => {
     let localMealId = handleMomentDate(date, "YYYY-MM-DD");
     let lunchMeals = data
       ? Object.values(data).filter((ser) => {
-          return localMealId === ser.mealId && ser.serviceType === "lunch";
+          return (
+            localMealId === ser.date &&
+            ser.type === "lunch" &&
+            ser.items !== undefined
+          );
         })
       : "";
-    const doesItexist = lunchMeals[0] && lunchMeals[0]?.mealItems;
+
+    const doesItexist = lunchMeals[0] && lunchMeals[0]?.items;
+    const getMealsbyType = (data, type) =>
+      data ? data.filter((ents, i) => ents.type === type) : null;
+
+    const lunchEntre = getMealsbyType(doesItexist, "entre");
+    const lunchSides = getMealsbyType(doesItexist, "side");
+    const lunchDescription = getMealsbyType(doesItexist, "other");
 
     activeService = {
-      entre: doesItexist ? lunchMeals[0]?.mealItems[0]?.entre : null,
-      sideOne: doesItexist ? lunchMeals[0]?.mealItems[1]?.sideOne : null,
-      sideTwo: doesItexist ? lunchMeals[0]?.mealItems[2]?.sideTwo : null,
-      description: doesItexist ? lunchMeals[0]?.mealItems[3]?.description : "",
+      entre: lunchEntre && lunchEntre[0] ? lunchEntre[0]?.name : "",
+      sideOne: lunchSides && lunchSides[0] ? lunchSides[0]?.name : "",
+      sideTwo: lunchSides && lunchSides[1] ? lunchSides[1]?.name : "",
+      description:
+        lunchDescription && lunchDescription[0]
+          ? lunchDescription[0]?.name
+          : "",
     };
     let dinnerMeals = data
       ? Object.values(data).filter((ser) => {
-          return localMealId === ser.mealId && ser.serviceType === "dinner";
+          return localMealId === ser.date && ser.type === "dinner";
         })
       : "";
+    const doesDinnerExist = dinnerMeals[0] && dinnerMeals[0]?.items;
 
-    const doesDinnerExist = dinnerMeals[0] && dinnerMeals[0]?.mealItems;
+    const dinnerEntre = getMealsbyType(doesDinnerExist, "entre");
+    const dinnerSides = getMealsbyType(doesDinnerExist, "side");
+    const dinnerDescription = getMealsbyType(doesDinnerExist, "other");
+
     activeDinnerService = {
-      entre: doesDinnerExist ? dinnerMeals[0]?.mealItems[0]?.entre : null,
-      sideOne: doesDinnerExist ? dinnerMeals[0]?.mealItems[1]?.sideOne : null,
-      sideTwo: doesDinnerExist ? dinnerMeals[0]?.mealItems[2]?.sideTwo : null,
-      description: doesDinnerExist
-        ? dinnerMeals[0]?.mealItems[3]?.description
-        : null,
+      entre: dinnerEntre && dinnerEntre[0] ? dinnerEntre[0]?.name : "",
+      sideOne: dinnerSides && dinnerSides[0] ? dinnerSides[0]?.name : "",
+      sideTwo: dinnerSides && dinnerSides[1] ? dinnerSides[1]?.name : "",
+      description:
+        dinnerDescription && dinnerDescription[0]
+          ? dinnerDescription?.name
+          : "",
     };
+
     return [activeService, activeDinnerService];
   }
 };
@@ -75,7 +89,6 @@ export const handleEditFromData = (date, state, data) => {
 export function handleValue(e, existedMeals, dispatch, state) {
   if (e.target.name === "lunch") {
     Object.keys(state).forEach((key) => {
-      //console.log(state & state[key] ? state[key].value : 'no ')
       dispatch({
         type: "LUNCH",
         payload: e.target.name,
