@@ -79,3 +79,16 @@ export const createData = (
     ],
   };
 };
+
+export const menus = [
+  {
+  title:'planner',
+  path:'/planner',
+  roles:['chef']
+  },
+  {
+    title:'menu',
+    path:'/menu',
+    roles:['chef', 'client']
+  }
+]

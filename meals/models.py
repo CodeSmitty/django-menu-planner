@@ -16,6 +16,8 @@ class Menu(models.Model):
         editable=False,
     )
 
+    
+
     def __str__(self):
         return self.name
 
@@ -39,6 +41,7 @@ class Meal(models.Model):
         ],
         max_length=10,
     )
+    url = models.URLField(max_length=200, default="")
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
@@ -50,7 +53,7 @@ class Meal(models.Model):
     objects = MealQuerySet.as_manager()
 
     class Meta:
-        unique_together = ['menu', 'date', 'type']
+        unique_together = ['menu', 'date', 'type', 'url']
         ordering = ['date', '-type']
 
 
@@ -92,3 +95,16 @@ class MealItem(models.Model):
         auto_now=True,
         editable=False,
     )
+
+
+class ClientHouse(models.Model):
+    name = models.CharField(max_length=100 )
+    house_menu = models.ForeignKey(Menu, related_name='menu', on_delete=models.CASCADE)
+    password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    
+
+        

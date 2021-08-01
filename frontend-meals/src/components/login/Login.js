@@ -1,19 +1,15 @@
-import React, {useState, useEffect} from 'react';
-import Planner from "../planner/Planner"
+import React, { useState, useEffect } from "react";
 import "./login.style.scss";
-import CSRFtoken from '../CSRFToken/CSRFtoken'
-import { Redirect, Link } from "react-router-dom";
+import CSRFtoken from "../CSRFToken/CSRFtoken";
+import { Redirect } from "react-router-dom";
 
-import {login} from '../../utility/auth';
-import {useAuthStore} from '../../utility/reducers/auth'
-import axios from 'axios';
-import {checkAuthenticated} from '../../utility/auth'
+import { login } from "../../utility/auth";
+import { useAuthStore } from "../../utility/reducers/auth";
+import { checkAuthenticated } from "../../utility/auth";
+import Introduction from "../../components/introduction/Introduction";
 
-
-
-
-const Login = ({  isAuthenticated }) => {
-    const [state, dispatch] = useAuthStore();
+const Login = ({ isAuthenticated }) => {
+  const [state, dispatch] = useAuthStore();
   const [formData, setFormData] = useState({
     username: "",
     password: "",
@@ -28,20 +24,25 @@ const Login = ({  isAuthenticated }) => {
     e.preventDefault();
 
     login(username, password, dispatch);
-    checkAuthenticated(dispatch)
+
+    checkAuthenticated(dispatch);
   };
 
-
+  useEffect(() => {}, [state.isAuthenticated, state.role]);
 
   if (state.isAuthenticated) {
-    console.log('hola')
-    return <Redirect to="/planner" component={Planner} />;
+    if (state.role === "chef") return <Redirect to="/planner" />;
+    else if (state.role === "client") {
+      return <Redirect to="/menu" />;
+    } else {
+      return <Redirect to="/" component={Introduction} />;
+    }
   }
 
   return (
     <div>
       <div className="login-form-container">
-        <form onSubmit={(e) => onSubmit(e)} className="login-form" >
+        <form onSubmit={(e) => onSubmit(e)} className="login-form">
           <CSRFtoken />
           <label className="login-label">Type your username</label>
           <input

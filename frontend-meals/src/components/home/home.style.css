@@ -1,0 +1,145 @@
+@import url("https://fonts.googleapis.com/css2?family=Alice&display=swap");
+.home-section {
+  width: 100%;
+  max-width: 100%;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  font-family: "Alice", "Times New Roman", Times, serif;
+  border-radius: 10px;
+}
+
+.service-wrapper {
+  width: 80%;
+  max-width: 80%;
+  background-color: ghostwhite;
+}
+
+.service-container {
+  width: 90%;
+  max-width: 90%;
+  margin: 0 auto;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  overflow: hidden;
+  -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 10px;
+}
+
+.dayNames {
+  border-bottom: #acb9b9 1px solid;
+  margin: auto;
+  height: 25px;
+  padding: 3px;
+}
+
+.dayName {
+  padding: 0;
+  margin: auto;
+}
+
+.weekly-btns {
+  padding: 5px;
+  margin: auto;
+  height: 30px;
+}
+
+.next-week {
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.noservice-block {
+  background-color: #132a27;
+  font-family: "Times New Roman", Times, serif;
+  color: white;
+  font-size: 1.2rem;
+  text-align: center;
+  padding: 55px;
+}
+
+.lunch-container-home,
+.dinner-container-home {
+  position: relative;
+  max-height: 400px;
+  height: 300px;
+  overflow: hidden;
+  border: azure 1px solid;
+  text-align: center;
+  z-index: 1;
+  border-bottom: #777777 1px solid;
+}
+
+.hide-next-week {
+  visibility: hidden;
+}
+
+.dates-and-titles {
+  width: 50%;
+  margin: 0 auto;
+  -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+          box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+  border-radius: 25px;
+  margin-bottom: 20px;
+}
+
+@media only screen and (max-width: 780px) {
+  .home-section {
+    width: 100%;
+  }
+  .lunch-container-home {
+    -webkit-box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+  }
+  .meal-wrapper {
+    width: 100%;
+    margin: 0 auto;
+    overflow: hidden;
+    -webkit-box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+  }
+  .service-wrapper {
+    width: 100%;
+    margin: 15px auto;
+    padding: 15px 5px;
+    background-color: #2daa42;
+    -webkit-box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0px 1px 3px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 5px;
+  }
+  .dates-and-titles {
+    width: 75%;
+    padding: 3px 0;
+    margin: 0 auto;
+    margin-bottom: 5px;
+    -webkit-box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+            box-shadow: 0 3px 5px 1px rgba(0, 0, 0, 0.5);
+    border-radius: 25px;
+  }
+  .service-container {
+    width: 80%;
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column nowrap;
+            flex-flow: column nowrap;
+    margin: 0 auto;
+    border: none;
+    border-radius: 0;
+    -webkit-box-shadow: none;
+            box-shadow: none;
+  }
+  .lunch-container-home,
+  .dinner-container-home {
+    width: 100%;
+    height: auto;
+    margin: auto;
+  }
+}
+/*# sourceMappingURL=home.style.css.map */

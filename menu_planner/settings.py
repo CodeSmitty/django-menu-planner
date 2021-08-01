@@ -27,7 +27,7 @@ SECRET_KEY = '_^k34)!8q9y$)s2*sb7&ttr%(%xqj-65l8kqeyv!l1oy8a4=#+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost"]
+ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost", '127.0.0.1']
 
 
 # Application definition
@@ -68,6 +68,11 @@ ROOT_URLCONF = 'menu_planner.urls'
 
 # SESSION_COOKIE_SECURE = True
 
+CSRF_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_HTTPONLY = True
+CSRF_COOKIE_HTTPONLY = False
+
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -87,6 +92,8 @@ TEMPLATES = [
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
+    "http://127.0.0.1:8000",
+    "http://127.0.0.1:8000"
 ]
 
 STATICFILES_DIRS = (
@@ -152,5 +159,10 @@ REST_FRAMEWORK = {
     ],
     'DEFAULT_AUTHENTICATION_CLASSES': [
         'rest_framework.authentication.SessionAuthentication',
+        'rest_framework.authentication.TokenAuthentication',
     ]
 }
+
+AUTHENTICATION_BACKENDS = [
+    'django.contrib.auth.backends.ModelBackend',
+]

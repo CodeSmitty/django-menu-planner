@@ -1,6 +1,6 @@
 from django.contrib import admin
 
-from .models import Menu, Meal, MealItem
+from .models import Menu, Meal, MealItem, ClientHouse
 
 
 class MealItemInline(admin.TabularInline):
@@ -20,3 +20,4 @@ class MealAdmin(admin.ModelAdmin):
 
 admin.site.register(Menu)
 admin.site.register(Meal, MealAdmin)
+admin.site.register(ClientHouse)

@@ -8,91 +8,61 @@ const service = {
     dinner: "",
   },
   entre: {
-    value: "",
-    veg: false,
-    glut: false,
-    dairy: false,
+    name: "",
+    is_vegetarian: false,
+    is_gluten_free: false,
+    is_dairy_free: false,
+    type:null
   },
   sideOne: {
-    value: "",
-    veg: false,
-    glut: false,
-    dairy: false,
+    name: "",
+    is_vegetarian: false,
+    is_gluten_free: false,
+    is_dairy_free: false,
+    type:null
   },
   sideTwo: {
-    value: "",
-    veg: false,
-    glut: false,
-    dairy: false,
+    name: "",
+    is_vegetarian: false,
+    is_gluten_free: false,
+    is_dairy_free: false,
+    type:null
   },
   description: {
-    value: "",
-    veg: false,
-    glut: false,
-    dairy: false,
+    name: "",
+    is_vegetarian: false,
+    is_gluten_free: false,
+    is_dairy_free: false,
+    type:null
   },
   image: null,
-};
+};  
 
-//  {
-//         ...state,
-//         entre: {
-//           ...state.entre,
-//           [action.payload]: !state.entre[action.payload],
-//         },
-//       };
+
 
 const reducer = (state = service, action) => {
   switch (action.type) {
     case "ENTRE":
-      const servType = action.servType;
-
-      return {
-        ...state,
-        [servType]: {
-          ...state[servType],
-          [action.payload]: !state[servType][action.payload],
-        },
-      };
-
-    case "ENTRE_TEXT":
-      return {
-        ...state,
-        [action.servType]: {
-          ...state[action.servType],
-          value: action.payload,
-        },
-      };
-    case "SIDEONE_TEXT":
-      return {
-        ...state,
-        [action.servType]: {
-          ...state[action.servType],
-          value: action.payload,
-        },
-      };
     case "SIDEONE":
-      return {
-        ...state,
-        [action.servType]: {
-          ...state[action.servType],
-          [action.payload]: !state[action.servType][action.payload],
-        },
-      };
     case "SIDETWO":
       return {
         ...state,
         [action.servType]: {
           ...state[action.servType],
           [action.payload]: !state[action.servType][action.payload],
+          
         },
       };
-    case "SIDETWO_TEXT":
+    case "ENTRE_TEXT":
+    case 'SIDEONE_TEXT':
+    case 'SIDETWO_TEXT':
+    case 'DESCRIPTION_TEXT':
       return {
         ...state,
         [action.servType]: {
           ...state[action.servType],
-          value: action.payload,
+          name: action.payload,
+          type: action.serviceType,
         },
       };
     case "DESCRIPTION":
@@ -101,14 +71,6 @@ const reducer = (state = service, action) => {
         [action.servType]: {
           ...state[action.servType],
           [action.payload]: !state[action.servType][action.payload],
-        },
-      };
-    case "DESCRIPTION_TEXT":
-      return {
-        ...state,
-        description: {
-          ...state.description,
-          value: action.payload,
         },
       };
     case "IMAGE":
@@ -126,7 +88,7 @@ const reducer = (state = service, action) => {
         },
         [action.servType]: {
           ...state[action.servType],
-          value: action.loadedData,
+          name: action.loadedData,
         },
       };
     case "DINNER":
@@ -139,7 +101,7 @@ const reducer = (state = service, action) => {
         },
         [action.servType]: {
           ...state[action.servType],
-          value: action.loadedData,
+          name: action.loadedData,
         },
       };
     case "RESET":
@@ -155,13 +117,7 @@ const reducer = (state = service, action) => {
       };
 
     case "GET_DATA":
-      // '"{
-      //   ...state,
-      //   [action.servType]: {
-      //     ...state[action.servType],
-      //     value: action.payload,
-      //   }"'
-      console.log("hello");
+     console.log(action)
       return {
         ...state,
         [action.servType]: {
@@ -169,6 +125,10 @@ const reducer = (state = service, action) => {
           value: action.payload,
         },
       };
+    case "GET_API_DATA":
+      return{
+        ...state, menu:action.payload, nextWeek:action.nextWeek, prevWeek:action.prevWeek
+      }
     default:
       return state;
   }

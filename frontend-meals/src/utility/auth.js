@@ -1,70 +1,100 @@
-import Cookies from 'js-cookie';
-import axios from 'axios';
+import Cookies from "js-cookie";
+import axios from "axios";
 
+export const checkAuthenticated = async (dispatch, request) => {
+  const config = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+    },
+  };
 
-
-export const login = async (username, password, dispatch) =>{
-
-    
- const config = {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-          "X-CSRFToken": Cookies.get("csrftoken"),
-        },
-      };
-
-
-      try {
-            const body = JSON.stringify({ username, password });
-            const res = await axios.post(
-              "http://localhost:8000/api/login/",
-              body,
-              config,
-            );
-
-            if (res.data.success) {
-                console.log(res.data.success)
-                dispatch({type:'LOGIN_SUCCESS'})
-                
-            } else {
-              console.log(res)
-                console.log("fail");
-            }
-
-      }catch(error){
-          console.log(error)
-      }
-      
-
-    };
-  
-    export const checkAuthenticated = async (dispatch)=> {
-      const config = {
-        headers: {
-          "Accept": "application/json",
-          "Content-Type": "application/json",
-        },
-      };
-      
-
-      try{
-          console.log('hola')
-          const res = await axios.get(
-            "http://localhost:8000/api/authenticated",
-            config,
-            
-          );
-          if (res.data.error || res.data.isAuthenticated=== 'error') {
-            console.log("Error: You weren't authenticated my guy.");
-          } else if(res.data.isAuthenticated === "success") {
-            console.log("yaaay");
-            dispatch({type:"AUTHENTICATED_SUCCESS"})
-          }
-       
-
-      }catch(err){
-        console.log(err)
-      }
-
+  try {
+    const res = await axios.get(
+      "http://localhost:8000/api/authenticated",
+      config
+    );
+    if (res.data.error || res.data.isAuthenticated === "error") {
+      console.log("Error: You weren't authenticated my guy.");
+    } else if (res.data.isAuthenticated === "success") {
+      dispatch({
+        type: "AUTHENTICATED_SUCCESS",
+        user: res.data.user,
+        role: res.data.role,
+        id: res.data.role_id,
+      });
     }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const login = async (username, password, dispatch) => {
+  const config = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken"),
+    },
+  };
+
+  try {
+    const body = JSON.stringify({ username, password });
+    const res = await axios.post(
+      "http://localhost:8000/api/login",
+      body,
+      config
+    );
+
+    if (res.data.success === "isAuthenticated") {
+      console.log("staff: ", res.data);
+      dispatch({
+        type: "LOGIN_SUCCESS",
+        user: res.data.user,
+        role: res.data.role,
+        level: res.data.role_id,
+        id: res.data.user_id,
+      });
+    } else if (res.data.success === "isAuthenticated") {
+      console.log("client: ", res.data);
+      dispatch({ type: "LOGIN_SUCCESS" });
+    }
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const checkLogout = async (dispatch) => {
+  console.log("logging out");
+  const config = {
+    headers: {
+      Accept: "application/json",
+      "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken"),
+    },
+  };
+
+  const body = JSON.stringify({
+    withCredentials: true,
+  });
+
+  try {
+    const res = await axios.post(
+      "http://localhost:8000/api/logout",
+      body,
+      config
+    );
+    if (res.data.success) {
+      dispatch({ type: "LOGGOUT_SUCCESS" });
+      window.location.reload();
+    } else {
+      console.log("error logging out");
+    }
+  } catch (err) {
+    console.log(err);
+  }
+};
+
+export const grantPermission = (requestedRole) => {
+  return false;
+};

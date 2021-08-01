@@ -1,39 +1,36 @@
-import React, {useEffect, useState} from "react";
-import { Route, Redirect } from "react-router-dom";
-import {useAuthStore} from '../utility/reducers/auth'
-import Login from '../components/login/Login';
-import axios from 'axios'
+import React, { useEffect, useState } from "react";
+import { Route } from "react-router-dom";
+import { useAuthStore } from "../utility/reducers/auth";
 import { checkAuthenticated } from "../utility/auth";
+import Unauthorized from "../components/unAuthorized/Unauthorized";
 
+const PrivateRoute = ({ component: Component, roles, ...options }) => {
+  const [state, dispatch] = useAuthStore();
+  const [hasPermission, setHasPermission] = useState(false);
+  
 
-const PrivateRoute = ({ component, ...options }) => {
-    const [state, dispatch] = useAuthStore()
-    const [checkAuth, setCheckAuth] = useState(false)
-    const config = {
-      headers: {
-        Accept: "application/json",
-        "Content-Type": "application/json",
-      },
-    };
-
-    useEffect(()=>{
-        if(state.isAuthenticated){
-                checkAuthenticated(dispatch)
-            setCheckAuth(true)
-        }else(
-            setCheckAuth(false)
-        )
-    },[])
-    
-console.log(checkAuth)
-console.log(state.isAuthenticated)
-    const finalComponent = state.isAuthenticated ? component : Login;
-    // if(!checkAuth) return null;
-    return(
-  <Route
-        {...options}
-        component={finalComponent}
-  />
-)}
+  useEffect(() => {
+    checkAuthenticated(dispatch);
+    if (state.role === roles) {
+      setHasPermission(true);
+    } else {
+      setHasPermission(false);
+    }
+  }, [state.isAuthenticated, state.role, hasPermission]);
+  return (
+    <div>
+      {hasPermission && <Route render={(props) => <Component {...props} />} />}
+      {!hasPermission && (
+        <Route
+          render={(props) => {
+            setTimeout(() => {
+              return <Unauthorized {...props} />;
+            }, 300);
+          }}
+        />
+      )}
+    </div>
+  );
+};
 
 export default PrivateRoute;

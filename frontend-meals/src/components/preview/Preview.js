@@ -1,17 +1,16 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect } from "react";
 import moment from "moment";
 import "./Preview.style.scss";
-import { handleEditFromData } from "../../utility/utility.functions";
-import useFetchedDataForm from "../../utility/customHooks/useFetchedData";
+import useApiFetchecData from "../../utility/customHooks/useApiFetchecData";
 import { useStore } from "../../utility/reducers";
+import { meals } from "../../utility/djangoApi/djangoApi";
+import { useAuthStore } from "../../utility/reducers/auth";
 
 const Preview = (props) => {
   const [state, dispatch] = useStore();
+  const [authState, secondDispatch] = useAuthStore();
   let currentWeekStart = moment(props.date).startOf("week");
   let currentWeekEnd = moment(props.date).endOf("week");
-
-  const weekToDate = `week_0${moment(currentWeekStart).week()}`;
-  const yearToDate = moment(currentWeekStart).format("YYYY");
 
   const [
     fetchMealData,
@@ -21,14 +20,15 @@ const Preview = (props) => {
     retrievedOnLoadData,
     retrievedDataForPreview,
     setRetrievedDataForPreview,
-  ] = useFetchedDataForm(currentWeekStart, currentWeekEnd);
+  ] = useApiFetchecData(currentWeekStart, currentWeekEnd);
+
+  useEffect(() => {}, [state]);
 
   useEffect(() => {
-    // eslint-disable-line react-hooks/exhaustive-deps
-    //format("YYYY MM DD")
-    fetchMealData(yearToDate, weekToDate);
-    //handleEditFromData(props.date,retrievedData,state)
-  }, [props.date, state]);
+    meals(authState.isAuthenticated, secondDispatch).then((res) => {
+      fetchMealData(authState.isAuthenticated, res);
+    });
+  }, [props.date, authState.isAuthenticated]);
 
   return (
     <div>
