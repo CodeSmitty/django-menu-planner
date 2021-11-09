@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import "./serviceform.style.scss";
-import { useStore } from "../../utility/reducers";
+import { useStore } from "../../utility/formOnChangeReducer";
 import { useAuthStore } from "../../utility/reducers/auth";
 import ImageSelector from "../imageSelector/ImageSelector";
 import { inputFormData } from "../../utility/inputElementsData";
@@ -54,6 +54,16 @@ const ServiceForm = (props) => {
   }
 
   useEffect(() => {
+    console.log(state)
+     const mealss = state
+       ? Object.values(state).filter((meal, i) => {
+           return (
+             meal?.type === "side" ||
+             meal?.type === "entre" ||
+             meal?.type === "other"
+           );
+         })
+       : null;
     meals(authState.isAuthenticated, authDispatch).then((menuId) => {
       fetchMealData(authState.isAuthenticated, menuId);
       retrieveDataForFormUpdating(authState.isAuthenticated, menuId).then(
@@ -64,7 +74,7 @@ const ServiceForm = (props) => {
     });
 
     setDateChange(props.dates);
-  }, [props.dates, authState.isAuthenticated]);
+  }, [props.dates,state, authState.isAuthenticated]);
 
   function handleCheckboxChange(e, data) {
     return dispatch({
@@ -81,6 +91,7 @@ const ServiceForm = (props) => {
       dataPreview,
       dispatch
     );
+
 
     handleValue(e, existedMeals, dispatch, state);
   }

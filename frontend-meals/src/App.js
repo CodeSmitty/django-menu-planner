@@ -1,6 +1,6 @@
 import React from "react";
 import "./App.css";
-import Store from "./utility/reducers";
+import Store from "./utility/formOnChangeReducer";
 import AuthStore from "./utility/reducers/auth";
 import Header from "./components/header/Header";
 import AboutPage from "./components/about/About";
@@ -10,19 +10,20 @@ import Layout from "./hoc/Layout";
 import Introduction from "./components/introduction/Introduction";
 import Dashboard from "./components/dashboard/Dashboard";
 import Unauthorized from "./components/unAuthorized/Unauthorized";
+import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 
 function App() {
   let routes = (
     <Switch>
       <Route exact path="/" render={(props) => <Introduction {...props} />} />
-      <Route exact path="/about" render={(props) => <AboutPage {...props} />} />
+      {/* <Route exact path="/about" render={(props) => <AboutPage {...props} />} />
       <Route exact path="/login" render={(props) => <Login {...props} />} />
       <Route
         exact
         path="/unauthorized"
         render={(props) => <Unauthorized {...props} />}
-      />
-      <Dashboard />
+      /> */}
+      <Route exact path='/dashboard' render={(props)=><AdminDashboard {...props} />} />
     </Switch>
   );
 
@@ -31,10 +32,10 @@ function App() {
       <Store>
         <AuthStore>
           <Router>
-            <Layout>
+            
               <Header />
               {routes}
-            </Layout>
+            
           </Router>
         </AuthStore>
       </Store>

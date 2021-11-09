@@ -19,7 +19,6 @@ class MealItemSerializer(serializers.ModelSerializer):
 
 class MealSerializer(serializers.ModelSerializer):
     items = MealItemSerializer(many=True)
-    print('meal item serializer')
     class Meta:
         model = Meal
         fields = ['id', 'date', 'type','url', 'items', 'menu', ]
@@ -27,8 +26,10 @@ class MealSerializer(serializers.ModelSerializer):
 
 
     def create(self, validated_data):
-        item_data = validated_data.pop('items') 
-        meal = Meal.objects.create(**validated_data)
+        id = Meal.objects.get('id')
+        print(id)
+        item_data = validated_data.pop('items')
+        meal= Meal.objects.create(**validated_data)
         for item_data in item_data:
             MealItem.objects.create(meal=meal, **item_data)
         return meal

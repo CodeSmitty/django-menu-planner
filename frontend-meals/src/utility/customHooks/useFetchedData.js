@@ -190,6 +190,7 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
     retrieveOnLoadData,
     retrivedDataForPreview,
     setRetrievedDataForPreview,
+    getCurrentDaysOfWeek
   ];
 };
 

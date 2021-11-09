@@ -16,9 +16,9 @@ const NavBar = () => {
     checkAuthenticated(dispatch);
   }, [state.isAuthenticated, state.role]);
 
-  const links = menus.map((menu) => {
+  const links = menus.map((menu, i) => {
     return (
-      <div>
+      <div key={i}>
         <UnlockAccess roles={menu.roles}>
           <li className="nav-li">
             <NavLink exact to={menu.path} className="active-links">
@@ -39,12 +39,17 @@ const NavBar = () => {
           </NavLink>
         </li>
         <li className="nav-li">
+          <NavLink className="active-links" to="/dashboard">
+            dashboard
+          </NavLink>
+        </li>
+        <li className="nav-li">
           <NavLink className="active-links" to="/about">
             About
           </NavLink>
         </li>
         {links}
-        {state.isAuthenticated ? (
+        {/* {state.isAuthenticated ? (
           <li className="nav-li">
             <NavLink className="active-links" to="/" onClick={handleLogout}>
               Logout
@@ -56,7 +61,7 @@ const NavBar = () => {
               Login
             </NavLink>
           </li>
-        )}
+        )} */}
       </ul>
     </div>
   );

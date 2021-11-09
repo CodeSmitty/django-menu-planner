@@ -1,0 +1,52 @@
+.form-field-wrapper{
+    width:100%;
+    border-radius:5px;
+    background-color: white;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content:space-between;
+}
+
+.form-field-wrapper{
+    margin:auto;
+}
+
+.meal-item-container{
+    flex:0 0 25%;
+}
+
+.service-type-container{
+    flex:0 0 25%;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: center;
+}
+
+.dietType-container{
+    flex: 0 0 25%;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: center;
+    
+    label{
+        font-size: 1em;
+    }
+}
+
+.submit-btn-container{
+    flex:0 0 5%;
+
+
+    button{
+        margin:auto;
+        background-color: white;
+        color:green;
+        width:20px;
+        height:20px;
+        border-radius: 50%;
+
+        &:hover{
+            cursor: pointer;
+        }
+    }
+}

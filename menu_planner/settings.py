@@ -68,9 +68,9 @@ ROOT_URLCONF = 'menu_planner.urls'
 
 # SESSION_COOKIE_SECURE = True
 
-CSRF_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_HTTPONLY = True
+# CSRF_COOKIE_SAMESITE = 'Strict'
+# SESSION_COOKIE_SAMESITE = 'Strict'
+SESSION_COOKIE_HTTPONLY = False
 CSRF_COOKIE_HTTPONLY = False
 
 TEMPLATES = [
@@ -93,7 +93,7 @@ CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:3000", 
 ]
 
 STATICFILES_DIRS = (

@@ -4,7 +4,7 @@ import Preview from "../preview/Preview";
 import moment from "moment";
 import "./planner.style.scss";
 import Calendar from "react-calendar";
-import { useStore } from "../../utility/reducers";
+import { useStore } from "../../utility/formOnChangeReducer";
 
 const Planner = () => {
   const [date, setDate] = useState(moment());
