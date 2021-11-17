@@ -4,13 +4,19 @@ import { handleMomentDate } from "../utility.functions";
 import DisplayMealService from "../../components/displayMealService/DisplayMealService";
 import { useAuthStore } from "../reducers/auth";
 import axios from "axios";
+import {useStore} from '../formOnChangeReducer'
+import moment from 'moment'
+import vegLogo from "../../assets/vegetarianIcon.png";
+import glutenLogo from "../../assets/glutenFree.png";
+import dairyFree from "../../assets/dairyfree.png";
 
 const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
   const db = () => firebase.database();
   const [currentMeals, setCurrentMeals] = useState();
   const [retrievedData, setRetrievedData] = useState();
   const [retrivedDataForPreview, setRetrievedDataForPreview] = useState();
-  const [state, dispatch] = useAuthStore();
+  const [authState, AuthDispatch] = useAuthStore();
+  const [state, dispatch] = useStore()
   const getCurrentDaysOfWeek = () => {
     let days = [];
     let day = currentWeekstart;
@@ -42,6 +48,75 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
       }
     }
   };
+
+  const fetchData = async (date, serviceType) =>{
+    const authenticated = true;
+    if(authenticated){
+      try {
+        const res = await axios.get("http://localhost:8000/posts/");
+
+        if (res.error) {
+          console.log(res.error);
+        } else if (res.data) {
+          let mealsArr = [];
+          const day = moment(date).format("YYYY-MM-DD");
+          const meals = res?.data;
+          const data = meals.filter((item, index) => {
+            return (
+              item?.date === day && item?.type.toLowerCase() === serviceType
+            );
+          });
+
+          const mealData = data
+            ? data.map((item, i) => {
+                return (
+                  <div key={i}>
+                    <li>
+                      <div>
+                        {item?.mealType === "entre" ? (
+                          <h3>{item?.mealItem}</h3>
+                        ) : null}
+                        {item?.mealType === "side" ? (
+                          <h4>{item?.mealItem} </h4>
+                        ) : null}
+                        {item?.mealType === "other" ? (
+                          <h4>{item?.mealItem} </h4>
+                        ) : null}
+                        {item?.is_vegetarian ? (
+                          <img
+                            className="diets-imgs"
+                            src={vegLogo}
+                            alt="vegetarian icon"
+                          />
+                        ) : null}
+                        {item?.is_gluten_free ? (
+                          <img
+                            className="diets-imgs"
+                            src={glutenLogo}
+                            alt="gluten free icon"
+                          />
+                        ) : null}
+                        {item?.is_dairy_free ? (
+                          <img
+                            className="diets-imgs"
+                            src={dairyFree}
+                            alt="dairy free icon"
+                          />
+                        ) : null}
+                      </div>
+                    </li>
+                  </div>
+                );
+              })
+            : null;
+          setCurrentMeals(mealData);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    }
+    
+  }
 
   const fetchMealData = async (isAuthenticated, id) => {
     if (isAuthenticated) {
@@ -189,7 +264,6 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
               })
             : null;
 
-          setCurrentMeals(mealsOfTheDay);
         }
       } catch (err) {
         console.log(err.status);
@@ -200,7 +274,7 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
   const fetchedData = retrivedDataForPreview;
 
   return [
-    fetchMealData,
+    fetchData,
     currentMeals,
     retrievedData,
     setRetrievedData,

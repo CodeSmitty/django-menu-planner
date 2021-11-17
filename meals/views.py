@@ -90,13 +90,14 @@ class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
     def post(self, request, menu_pk):
         data = self.request.data
         user = self.request.user
-        
+        print(data)
         if user.is_authenticated and user.has_perm("meals.change_menu"):
             
             if request.method == "POST":
                 serializer =MealSerializer(data=data)
                 if serializer.is_valid(raise_exception=True):
                     print("serializer error: ", serializer.errors)
+                    print("the serializer:", serializer)
                     serializer.save()
                     return Response({'success':"Your post was successfull."})
                 return Response({'failure': 'post was not authenticated'})

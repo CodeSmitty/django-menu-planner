@@ -13,7 +13,7 @@ const UnlockAccess = ({ children, roles }) => {
     }
   }, [state.isAuthenticated, state.role, permission]);
 
-  let hasPermission = false;
+  let hasPermission = true;
   if (roles && roles.length > 0) {
     hasPermission = roles.includes(state.role);
   }

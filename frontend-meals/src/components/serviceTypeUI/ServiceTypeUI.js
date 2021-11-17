@@ -11,7 +11,7 @@ const ServiceTypeUI = ({formArray, dayIndex, day, servType}) =>{
         if (element.day_index === dayIndex && servType === element.serviceType) {
           return (
             <div key={`dayIndex${i}`}>
-              <FormFields menu={7} date={date} serviceType={element.serviceType.toUpperCase()} />
+              <FormFields menu={1} date={date} serviceType={element.serviceType.toUpperCase()} />
             </div>
           );
         }

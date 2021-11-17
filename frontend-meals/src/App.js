@@ -16,14 +16,18 @@ function App() {
   let routes = (
     <Switch>
       <Route exact path="/" render={(props) => <Introduction {...props} />} />
-      {/* <Route exact path="/about" render={(props) => <AboutPage {...props} />} />
+      <Route exact path="/about" render={(props) => <AboutPage {...props} />} />
       <Route exact path="/login" render={(props) => <Login {...props} />} />
       <Route
         exact
         path="/unauthorized"
         render={(props) => <Unauthorized {...props} />}
-      /> */}
-      <Route exact path='/dashboard' render={(props)=><AdminDashboard {...props} />} />
+      />
+      <Route
+        exact
+        path="/dashboard"
+        render={(props) => <Dashboard {...props} />}
+      />
     </Switch>
   );
 

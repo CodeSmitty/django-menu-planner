@@ -1,0 +1,224 @@
+{
+  "posts": [
+    {
+      "type": "LUNCH",
+      "date": "2021-11-14",
+      "mealItem": "steak",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 1
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-14",
+      "mealItem": "veggies",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": false,
+      "is_gluten_free": true,
+      "id": 2
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-14",
+      "mealItem": "potatoes",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 3
+    },
+    {
+      "type": "DINNER",
+      "date": "2021-11-15",
+      "mealItem": "chicken",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": false,
+      "is_gluten_free": false,
+      "id": 4
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-15",
+      "mealItem": "vegetables",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": false,
+      "is_gluten_free": true,
+      "id": 5
+    },
+    {
+      "type": "DINNER",
+      "date": "2021-11-14",
+      "mealItem": "Chicken Cordon Bleu",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": false,
+      "is_dairy_free": false,
+      "is_gluten_free": false,
+      "id": 6
+    },
+    {
+      "type": "DINNER",
+      "date": "2021-11-16",
+      "mealItem": "Baked Ziti",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 7
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-16",
+      "mealItem": "Nachos",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 8
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-16",
+      "mealItem": "Beans",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 9
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-16",
+      "mealItem": "rice",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 10
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-16",
+      "mealItem": "pico",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 11
+    },
+    {
+      "type": "DINNER",
+      "date": "2021-11-16",
+      "mealItem": "Vegetables",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 12
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-18",
+      "mealItem": "Poke Bowls",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 13
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-18",
+      "mealItem": "White Rice",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 14
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-18",
+      "mealItem": "Brown Rice",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 15
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-17",
+      "mealItem": "Wing Wednesday",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 16
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-17",
+      "mealItem": "Green bean fries",
+      "mealType": "side",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 17
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-17",
+      "mealItem": "Fresh Cut Fruit",
+      "mealType": "other",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 18
+    },
+    {
+      "type": "DINNER",
+      "date": "2021-11-17",
+      "mealItem": "Sigma Kappa && ATO Cookout",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 19
+    },
+    {
+      "type": "LUNCH",
+      "date": "2021-11-19",
+      "mealItem": "Deli",
+      "mealType": "entre",
+      "menu": 7,
+      "is_vegetarian": true,
+      "is_dairy_free": true,
+      "is_gluten_free": true,
+      "id": 20
+    }
+  ]
+}

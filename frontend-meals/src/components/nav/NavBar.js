@@ -48,8 +48,7 @@ const NavBar = () => {
             About
           </NavLink>
         </li>
-        {links}
-        {/* {state.isAuthenticated ? (
+        {state.isAuthenticated ? (
           <li className="nav-li">
             <NavLink className="active-links" to="/" onClick={handleLogout}>
               Logout
@@ -61,7 +60,7 @@ const NavBar = () => {
               Login
             </NavLink>
           </li>
-        )} */}
+        )}
       </ul>
     </div>
   );

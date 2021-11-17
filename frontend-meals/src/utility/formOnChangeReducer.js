@@ -2,98 +2,56 @@ import React, { createContext, useContext, useReducer } from "react";
 
 const storeContext = createContext();
 
-
-
-const initialState = {
-  id: "",
-  date: "",
- type:'',
- menu:'',
-  items:[]
-};
-
+const initialState =[]
 
 const reducer = (state = initialState, action) => {
   switch (action.type) {
+    case "GET_DATA":
+      return action.payload
     case "FORM_TEXT":
-      console.log(state)
-      return{
+      return {
         ...state,
-        name:action.name,
-        entre:action.entre,
-        mealType:action.mealType,
-        
-      }
-    case "SET_SERVICE_TYPE":
-      // if(action.payload.toLowerCase() === 'dinner'){
-      //   return {
-      //     ...state,
-      //     type:{
-      //       lunch:false,
-      //       dinner:true
-      //     }
-      //   }
-      // }else{
-      //   return{
-      //     ...state,
-      //     type:{
-      //       lunch:true,
-      //       dinner:false
-      //     }
-      //   }
-      // }
-      return{
-        ...state,
-        type:action.payload.toLowerCase()
-      }
-    case "IMAGE":
+        name: action.name,
+        entre: action.entre,
+        mealType: action.mealType,
+      };
+      case "IMAGE":
       return {
         ...state,
         image: action.payload,
       };
-    case "LUNCH":
-      console.log(action?.type)
+    case "SET_SERVICE_TYPE":
       return {
         ...state,
-        date:action.date,
-        type: state.type,
-        menu:action.menu, 
-        items:[...state?.items, {
-          name:action.mealItem,
-          type:action.mealType,
-          is_vegetarian:action.is_vegetarian,
-          is_gluten_free:action.is_gluten_free,
-          is_dairy_free:action.is_dairy_free
-
-        }]
+        type: action.payload.toLowerCase(),
       };
+    
+    case "MEALS":
+      const newState = action.payload
+      return newState;
+     
     case "DINNER":
-      console.log(action?.type)
-      if(action.type === 'DINNER'){
-        if(state.type !== [...state?.type]){
-          console.log("it's not the same")
-        }
-        return {
-        ...state,
-        date: action.date,
-        type: state?.type,
-        menu:action.menu,
-        items: [
-          ...state?.items,
-          {
-            name: action.mealItem,
-            type: action.mealType,
-            is_vegetarian: action.is_vegetarian,
-            is_gluten_free: action.is_gluten_free,
-            is_dairy_free: action.is_dairy_free,
-          },
-        ],
-      };
-      }
-      return;
+   
+        return[{
+          ...state,
+          date: action.date,
+          type: state?.type,
+          menu: action.menu,
+          items: [
+            {
+              name: action.mealItem,
+              type: action.mealType,
+              is_vegetarian: action.is_vegetarian,
+              is_gluten_free: action.is_gluten_free,
+              is_dairy_free: action.is_dairy_free,
+            },
+          ],
+        }];
       
+      
+
     case "RESET":
-        return initialState;
+      return initialState;
     case "GET_DATA":
       console.log(action);
       return {

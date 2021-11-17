@@ -5,7 +5,8 @@ import "./weekyMenuView.scss";
 import { useStore } from "../../utility/formOnChangeReducer";
 import { useFormik } from "formik";
 import ServiceTypeUI from "../serviceTypeUI/ServiceTypeUI";
-import LunchMeals from "./LunchOrDinnerView/LunchMeals";
+import RenderMeals from "./LunchOrDinnerView/RenderMeals";
+import axios from 'axios';
 
 
 const WeeklyMenuView = () => {
@@ -36,14 +37,13 @@ const WeeklyMenuView = () => {
       serviceType:event.target.getAttribute('name')
     };
 
-    dispatch({type:'SET_SERVICE_TYPE', payload: event.target.getAttribute('name')})
+    // dispatch({type:'SET_SERVICE_TYPE', payload: event.target.getAttribute('name')})
     setInput((prev) => [...prev, initialState]);
   };
 
  
   useEffect(() => {
     
-     console.log(state)
      
   }, [state]);
   
@@ -71,14 +71,14 @@ const WeeklyMenuView = () => {
               servType="lunch"
             />
             <ul>
-              {state?.type === "lunch" ? (
-                <LunchMeals
+              
+                <RenderMeals
                   formArray={input}
                   dayIndex={i}
                   date={day}
                   serviceType={"lunch"}
                 />
-              ) : null}
+              
             </ul>
           </div>
         </div>
@@ -101,14 +101,12 @@ const WeeklyMenuView = () => {
               day={day}
             />
             <ul>
-              {state?.type === "dinner" ? (
-                <LunchMeals
+                <RenderMeals
                   formArray={input}
                   dayIndex={i}
                   date={day}
                   serviceType={"dinner"}
                 />
-              ) : null}
             </ul>
           </div>
         </div>

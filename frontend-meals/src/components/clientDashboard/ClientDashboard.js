@@ -7,7 +7,6 @@ const ClientDashboard = () =>{
 
     return(<div>
         <Switch>
-            <PrivateRoute exact to="/menu" roles={'client'} component={Home} />
         </Switch>
     </div>
         )

@@ -10,6 +10,7 @@
     "firebase": "^8.3.0",
     "formik": "^2.2.9",
     "js-cookie": "^2.2.1",
+    "json-server": "^0.17.0",
     "moment": "^2.29.1",
     "momentjs": "^2.0.0",
     "node-sass": "^5.0.0",
