@@ -39,7 +39,6 @@ const reducer = (state, action) => {
     case "ADMIN_SUCCESS":
       return { ...state, isAuthenticated: true, role: "admin" };
     case "CHECK_MEAL_ID":
-      console.log(action);
       return { ...state, menu_id: action.id, name: action.name };
     case "LOGGOUT_SUCCESS":
       return { ...state, isAuthenticated: false };

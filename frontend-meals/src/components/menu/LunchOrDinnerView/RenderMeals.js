@@ -5,16 +5,22 @@ import vegLogo from "../../../assets/vegetarianIcon.png";
 import glutenLogo from "../../../assets/glutenFree.png";
 import dairyFree from "../../../assets/dairyfree.png";
 import useFetchedDataForm from "../../../utility/customHooks/useApiFetchecData"
+import {meals} from "../../../utility/djangoApi/djangoApi"
+import { useAuthStore } from '../../../utility/reducers/auth';
 
 
 const RenderMeals = ({date, serviceType, dayIndex, formArray}) =>{
     const [state, dispatch] = useStore()
-    const [fetchData, currentMeals] = useFetchedDataForm()
+    const [authState, authDispatch] = useAuthStore()
+    const [fetchData, currentMeals] = useFetchedDataForm(date)
 
     
 
     useEffect(() => {
-        fetchData(date,serviceType)
+         meals(authState.isAuthenticated, authDispatch).then((res) => {
+             fetchData(date,serviceType, authState.isAuthenticated, res)
+         });
+        
     },[])
 
     return(<div>

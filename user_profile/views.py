@@ -7,4 +7,4 @@ class GetUserProfileView(APIView):
 
     serializer_class = UserProfileSerializer
     def get_queryset(self):
-        return  MyUser.objects.get(id=self.request.user.id)
+        return  UserProfile.objects.get(id=self.request.user.id)

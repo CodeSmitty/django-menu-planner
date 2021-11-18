@@ -13,15 +13,10 @@ const useSubmitForm = (props, dispatch) => {
   //const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
 
+  useEffect(() => {
+    console.log(state);
+  }, [state[0]?.items]);
 
-
-  
-  useEffect(()=>{
-    console.log(state)
-  },[state[0]?.items])
- 
-
-  
   const handleFormSubmit = async (e, data) => {
     let image;
 
@@ -38,50 +33,32 @@ const useSubmitForm = (props, dispatch) => {
     meals(authState.isAuthenticated, authDispatch).then(async (menuId) => {
       try {
         const testData = {
-                  id: "",
-                  date: data?.date,
-                  type: data?.type.toLowerCase(),
-                  menu: menuId,
-                  items: [{
-                    name:data?.mealItem,
-                    is_vegetarian:data?.is_vegetarian,
-                    is_gluten_free:data?.is_gluten_free,
-                    is_dairy_free:data?.is_dairy_free,
-                    type:data?.mealType
-                  }],
-                  url: "http://rhpconstructioninc.com",
-                };
+          date: data?.date,
+          type: data?.type.toLowerCase(),
+          menu: menuId,
+          items: [
+            {
+              name: data?.mealItem,
+              is_vegetarian: data?.is_vegetarian,
+              is_gluten_free: data?.is_gluten_free,
+              is_dairy_free: data?.is_dairy_free,
+              type: data?.mealType,
+            },
+          ],
+          url: "http://rhpconstructioninc.com",
+        };
 
-                console.log(data)
-                console.log(testData)
-
-                const body = JSON.stringify(testData );
-                const res = axios.post(
-                  `http://localhost:8000/api/menus/${menuId}/meals/`,
-                  body,
-                  config
-                );
-                console.log(res)
-                
+        const body = JSON.stringify(testData);
+        console.log(body);
+        const res = axios.post(
+          `http://localhost:8000/api/menus/${menuId}/meals/`,
+          body,
+          config
+        );
       } catch (error) {
         console.log(error);
       }
     });
-
-   
-   
-     
-   
-     
-  
-      
- 
-     
-                
-
-               
-
-    
   };
 
   return [handleFormSubmit];
