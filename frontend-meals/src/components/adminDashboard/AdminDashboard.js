@@ -1,6 +1,5 @@
 import React from 'react';
 import PrivateRoute from '../../hoc/PrivateRoute'
-import Planner from "../planner/Planner"
 import Home from '../home/Home';
 import { Route, Switch, BrowserRouter as Router } from "react-router-dom";
 import "./adminDashboard.scss";
@@ -35,7 +34,7 @@ const AdminDashboard = ({children})=>{
             </div>
           </div>
           <div className="content-container">
-            <div className='admin-form-container'>
+            <div className='menu-container'>
               <HandleServiceForm />
             </div>
           </div>

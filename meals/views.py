@@ -2,8 +2,8 @@ from django.contrib import messages, auth
 from django.contrib.auth import authenticate, login
 from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.auth.models import User, Permission
+from django.db.models.query import QuerySet
 from django.http.response import HttpResponseRedirect
-from django.http import JsonResponse
 from rest_framework.authentication import SessionAuthentication
 
 from django.utils.decorators import method_decorator
@@ -23,24 +23,24 @@ from .serializers import MenuSerializer, MealSerializer, ClientSerializer, UserS
 
 @method_decorator(csrf_exempt, name='dispatch')
 class CheckAuthenticatedView(APIView):
-    queryset = Menu.objects.all()
-    # permission_classes = (IsUserStaff, IsUserAdmin)
+    serializer_class = MenuSerializer
     authentication_classes = [SessionAuthentication]
-
 
     @classmethod
     def get_extra_actions(cls):
         return []
 
-    def get(self, request, format=None):
+    def get(self, format=None ):
         user = self.request.user
-
+        menu_id = user.menus.all()
+        print(menu_id)
         try:
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 groupName = user.groups.filter(user=user).values()[0]
                 
-                return Response({"isAuthenticated": "success", "user": user.username, "role":groupName['name'], 'role_id':groupName['id']})
+                
+                return Response({"isAuthenticated": "success", "user": user.username, "role":groupName['name'], 'menu_id':groupName['id'], "user_id":user.id})
             else:
                 return Response({'isAuthenticated': 'error'})
         except:
@@ -72,7 +72,7 @@ class MenuViewSet(viewsets.ReadOnlyModelViewSet):
             print('no esta aqui señor')
 
 
-class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
+class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet, APIView):
     serializer_class = MealSerializer
     pagination_class = MealPagination
 
@@ -87,23 +87,27 @@ class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet):
             print("not auth")
             return HttpResponseRedirect(self.request, "/login")
 
-    def post(self, request, menu_pk):
+    def create(self, request, menu_pk):
         data = self.request.data
         user = self.request.user
+        
         if user.is_authenticated and user.has_perm("meals.change_menu"):
-            
-            if request.method == "POST":
-                serializer =MealSerializer(data=data)
+            if request.method == "POST": # use put instead of post. 
+                serializer =MealSerializer( data=data, partial=True)
+               
                 if serializer.is_valid(raise_exception=True):
-                    serializer.save()
-                    return Response({'success':"Your post was successfull."})
+                    serializer.save() 
+                    print(serializer.data)
+                    return Response({'success':"Your post was successfull.", 'data':serializer.data})
                 return Response({'failure': 'post was not authenticated'})
         return Response({'failure': "user is not authenticated or does not have permission to submit form"})
+    
+ 
             
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
-    permission_classes = (permissions.AllowAny )
+    permission_classes = (permissions.AllowAny, )
     authentication_classes = [SessionAuthentication]
     serializer_class = UserSerializer
 
@@ -115,15 +119,22 @@ class LoginView(APIView):
         data = self.request.data
         username = data['username']
         password = data['password']
-
+        print(data)
+        
         try:
             user = auth.authenticate(username=username, password=password)
+
+            
             if user is not None:
                 auth.login(request, user)
                 groupName = user.groups.filter(user=user).values()[0]
-                if user.has_perm('meals.change_menu'):
-                    return Response({"success":"isAuthenticated","role":groupName['name'], "user":user.username, 'user_id':user.id, 'level':groupName['id'] })
-                elif user.has_perm('meals.client_menu_view'):
+                group_perms = user.get_group_permissions()
+                print(group_perms)
+                if user.has_perm('meals.change_meal'):
+                    print(user)
+                    return Response({"success":"isAuthenticated","role":groupName['name'], "user":user.username, 'user_id':user.id, 'menu_id':groupName['id'] })
+                if  user.has_perm('meals.view_meal'):
+                    print(user)
                     return Response({'success': 'isAuthenticated',"role":groupName['name'], "user":user.username, 'user_id':user.id, 'level':groupName['id']})
                 else:
                     return Response({"error":"You do not have permission to see this page"})

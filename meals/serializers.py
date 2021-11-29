@@ -2,7 +2,7 @@ from rest_framework import serializers
 
 from .models import Menu, Meal, MealItem, ClientHouse
 from django.contrib.auth.models import User
-
+import json
 
 class MenuSerializer(serializers.ModelSerializer):
     class Meta:
@@ -14,7 +14,7 @@ class MealItemSerializer(serializers.ModelSerializer):
     class Meta:
         model = MealItem
         fields = ['name', 'type', 'is_dairy_free',
-                  'is_gluten_free', 'is_vegetarian', ]
+                  'is_gluten_free', 'is_vegetarian', 'id' ]
 
 
 class MealSerializer(serializers.ModelSerializer):
@@ -23,14 +23,17 @@ class MealSerializer(serializers.ModelSerializer):
         model = Meal
         fields = ['id', 'date', 'type','url', 'items', 'menu', ]
         validators = []
+        
 
 
     def create(self, validated_data):
         item_data = validated_data.pop('items')
-        meal= Meal.objects.create(**validated_data)
+        meal, created= Meal.objects.update_or_create(**validated_data)
         for item_data in item_data:
-            MealItem.objects.create(meal=meal, **item_data)
+            MealItem.objects.update_or_create(meal=meal, **item_data)
         return meal
+    
+
 
 class ClientSerializer(serializers.ModelSerializer):
 

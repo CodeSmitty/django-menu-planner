@@ -13,7 +13,6 @@ const NavBar = () => {
   };
 
   useEffect(() => {
-    checkAuthenticated(dispatch);
   }, [state.isAuthenticated, state.role]);
 
   const links = menus.map((menu, i) => {

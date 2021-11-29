@@ -53,7 +53,7 @@ class Meal(models.Model):
     objects = MealQuerySet.as_manager()
 
     class Meta:
-        unique_together = ['menu', 'date', 'type', 'url']
+        unique_together = ['menu', 'date', 'type']
         ordering = ['date', '-type']
 
 

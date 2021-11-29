@@ -11,17 +11,19 @@ export const checkAuthenticated = async (dispatch, request) => {
 
   try {
     const res = await axios.get(
-      "http://localhost:8000/api/authenticated",
+      "http://localhost:3000/api/authenticated",
       config
     );
     if (res.data.error || res.data.isAuthenticated === "error") {
       console.log("Error: You weren't authenticated my guy.");
     } else if (res.data.isAuthenticated === "success") {
+      console.log(res.data)
       dispatch({
         type: "AUTHENTICATED_SUCCESS",
         user: res.data.user,
         role: res.data.role,
-        id: res.data.role_id,
+        menu_id: res.data.menu_id,
+        user_id:res.data.user_id
       });
     }
   } catch (err) {
@@ -40,8 +42,9 @@ export const login = async (username, password, dispatch) => {
 
   try {
     const body = JSON.stringify({ username, password });
+   
     const res = await axios.post(
-      "http://localhost:8000/api/login",
+      "http://localhost:3000/api/login",
       body,
       config
     );
@@ -55,9 +58,6 @@ export const login = async (username, password, dispatch) => {
         level: res.data.role_id,
         id: res.data.user_id,
       });
-    } else if (res.data.success === "isAuthenticated") {
-      console.log("client: ", res.data);
-      dispatch({ type: "LOGIN_SUCCESS" });
     }
   } catch (error) {
     console.log(error);
@@ -80,7 +80,7 @@ export const checkLogout = async (dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:8000/api/logout",
+      "http://localhost:3000/api/logout",
       body,
       config
     );

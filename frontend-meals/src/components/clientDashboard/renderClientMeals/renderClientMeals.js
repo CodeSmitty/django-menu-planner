@@ -3,31 +3,43 @@ import moment from "moment";
 import vegLogo from "../../../assets/vegetarianIcon.png";
 import glutenLogo from "../../../assets/glutenFree.png";
 import dairyFree from "../../../assets/dairyfree.png";
-import edit from '../../../assets/edit.png'
-import trash from "../../../assets/trash.png"
-import "./rendermeals.scss"
 
 const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
   useEffect(() => {}, [meals]);
 
   const day = moment(date).format("YYYY-MM-DD");
-
   const data = meals
     ? meals?.results.filter((item, index) => {
         return item?.date === day && item?.type.toLowerCase() === serviceType;
       })
     : null;
+
   const mealData = data
     ? data.map((item, i) => {
         return item.items.map((meal) => {
           return (
-            <div className="mealsContainer" key={meal.id} style={{border:meal?.type === 'entre'? '1px solid green': '1px solid yellow'}}>
+            <div
+              className="mealsContainer"
+              key={meal.id}
+              style={{
+                border:
+                  meal?.type === "entre"
+                    ? "1px solid green"
+                    : "1px solid yellow",
+              }}
+                >
               <div className="meal_item_container">
-                <h3 className="meal_items">{meal?.type === "entre" ? meal?.name : null}</h3>
-                <h4 className="meal_items">{meal?.type === "side" ? meal?.name : null}</h4>
-                <h5 className="meal_items">{meal?.type === "other" ? meal?.name : null}</h5>
+                <h3 className="meal_items">
+                  {meal?.type === "entre" ? meal?.name : null}
+                </h3>
+                <h4 className="meal_items">
+                  {meal?.type === "side" ? meal?.name : null}
+                </h4>
+                <h5 className="meal_items">
+                  {meal?.type === "other" ? meal?.name : null}
+                </h5>
               </div>
-              <div className='diets_logo_container'>
+              <div className="diets_logo_container">
                 {meal?.is_vegetarian ? (
                   <img
                     className="diets-imgs"
@@ -49,10 +61,6 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
                     src={dairyFree}
                   />
                 ) : null}
-              </div>
-              <div className="edit-delete-container">
-                <div className="edit-del-icon"><button><img alt="edit icon" src={edit}/></button></div>
-                <div className="edit-del-icon" ><button><img alt="delete icon" src={trash}/></button></div>
               </div>
             </div>
           );

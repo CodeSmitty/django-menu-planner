@@ -9,6 +9,8 @@ import useSubmitForm from "../../../utility/customHooks/useApiSubmitForm";
 const FormFields = ({ ...options }) => {
   const [state, dispatch] = useStore();
   const [showForm, setShowForm] = useState(true);
+  const [isLoading, setIsLoading] = useState(false);
+  const { menu, serviceType, date } = options;
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -21,15 +23,15 @@ const FormFields = ({ ...options }) => {
     onSubmit: (actions, values) => {},
   });
 
-  const [handleFormSubmit] = useSubmitForm(options?.date, dispatch);
+  const [handleFormSubmit] = useSubmitForm(options?.date);
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const { name, value } = e.target;
     formik.setFieldValue(name, value);
-
-    const formData = {
-      type: options.serviceType,
+    let formData = {
+      type: options?.serviceType,
+      serviceType: options.serviceType?.toLowerCase(),
       date: options.date,
       mealItem: formik.values.mealItem,
       mealType: formik.values.mealType,
@@ -38,16 +40,14 @@ const FormFields = ({ ...options }) => {
       is_dairy_free: formik.values.is_dairy_free,
       is_gluten_free: formik.values.is_gluten_free,
     };
-  
-    dispatch({type:"MEALS", payload:formData})
 
     setShowForm(false);
 
-    handleFormSubmit(e, formData);
+    handleFormSubmit(e, formData, options.currentMeals);
   };
 
   return (
-    <div>
+    <>
       {showForm ? (
         <form onSubmit={(e) => handleSubmit(e)}>
           <div className="form-field-wrapper">
@@ -56,6 +56,7 @@ const FormFields = ({ ...options }) => {
                 name="mealItem"
                 value={formik.values.mealItem}
                 onChange={formik.handleChange}
+                autoFocus
               />
             </div>
             <div className="service-type-container">
@@ -113,7 +114,7 @@ const FormFields = ({ ...options }) => {
           </div>
         </form>
       ) : null}
-    </div>
+    </>
   );
 };
 

@@ -1,0 +1,23 @@
+.client-dashboard-wrapper{
+    display:flex;
+    justify-content: center;
+    flex-flow:row wrap;
+    padding:5px;
+}
+
+.client-menu-bar{
+    flex:0 0 25%;
+    
+}
+
+.arrow-btns-wrapper{
+    display:flex;
+    justify-content: space-between;
+    flex-flow:row nowrap;
+
+}
+
+.arrow-btns{
+    font-size: 1.2rem;
+
+}

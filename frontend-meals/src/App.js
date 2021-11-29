@@ -1,5 +1,6 @@
-import React from "react";
+import React, {useEffect} from "react";
 import "./App.css";
+import moment from 'moment'
 import Store from "./utility/formOnChangeReducer";
 import AuthStore from "./utility/reducers/auth";
 import Header from "./components/header/Header";
@@ -10,9 +11,10 @@ import Layout from "./hoc/Layout";
 import Introduction from "./components/introduction/Introduction";
 import Dashboard from "./components/dashboard/Dashboard";
 import Unauthorized from "./components/unAuthorized/Unauthorized";
-import AdminDashboard from "./components/adminDashboard/AdminDashboard";
 
 function App() {
+
+
   let routes = (
     <Switch>
       <Route exact path="/" render={(props) => <Introduction {...props} />} />
@@ -35,12 +37,14 @@ function App() {
     <div className="App">
       <Store>
         <AuthStore>
-          <Router>
+          <Layout>
+            <Router>
             
-              <Header />
-              {routes}
+                <Header />
+                {routes}
             
-          </Router>
+            </Router>
+          </Layout>
         </AuthStore>
       </Store>
     </div>

@@ -7,8 +7,6 @@ const initialState = {
   role: null,
   menu_id: null,
   user: null,
-  isLoading: null,
-  name: null,
 };
 
 const reducer = (state, action) => {
@@ -17,10 +15,10 @@ const reducer = (state, action) => {
       return {
         ...state,
         isAuthenticated: true,
-        isLoading: false,
         role: action.role,
-        id: action.id,
+        menu_id: action.menu_id,
         user: action.user,
+        user_id:action.user_id
       };
     case "LOGIN_SUCCESS":
       return {
@@ -32,12 +30,6 @@ const reducer = (state, action) => {
         level: action.id,
         user: action.user,
       };
-    case "CLIENT_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "client" };
-    case "CHEF_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "staff" };
-    case "ADMIN_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "admin" };
     case "CHECK_MEAL_ID":
       return { ...state, menu_id: action.id, name: action.name };
     case "LOGGOUT_SUCCESS":

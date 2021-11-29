@@ -3,7 +3,7 @@
     border-radius:5px;
     background-color: white;
     display:flex;
-    flex-flow:row nowrap;
+    flex-flow:row wrap;
     justify-content:space-between;
 }
 
@@ -49,4 +49,15 @@
             cursor: pointer;
         }
     }
+}
+
+@media  screen and (max-width: 958px) {
+    .form-field-wrapper{
+        flex-flow:column nowrap;
+    }
+
+    .meal-item-container, .service-type-container, .dietType-container{
+        padding:2px;
+    }
+    
 }
