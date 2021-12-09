@@ -6,6 +6,7 @@ export const checkAuthenticated = async (dispatch, request) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken"),
     },
   };
 
@@ -17,13 +18,16 @@ export const checkAuthenticated = async (dispatch, request) => {
     if (res.data.error || res.data.isAuthenticated === "error") {
       console.log("Error: You weren't authenticated my guy.");
     } else if (res.data.isAuthenticated === "success") {
-      console.log(res.data)
+      const menu_id = await axios.get(
+        "http://localhost:3000/api/menus/",
+        config
+      );
       dispatch({
         type: "AUTHENTICATED_SUCCESS",
         user: res.data.user,
         role: res.data.role,
-        menu_id: res.data.menu_id,
-        user_id:res.data.user_id
+        user_id: res.data.user_id,
+        menu_id: menu_id.data[0].id,
       });
     }
   } catch (err) {
@@ -42,7 +46,7 @@ export const login = async (username, password, dispatch) => {
 
   try {
     const body = JSON.stringify({ username, password });
-   
+
     const res = await axios.post(
       "http://localhost:3000/api/login",
       body,
@@ -51,12 +55,18 @@ export const login = async (username, password, dispatch) => {
 
     if (res.data.success === "isAuthenticated") {
       console.log("staff: ", res.data);
+      const menu_id = await axios.get(
+        "http://localhost:3000/api/menus/",
+        config
+      );
+
       dispatch({
         type: "LOGIN_SUCCESS",
         user: res.data.user,
         role: res.data.role,
         level: res.data.role_id,
-        id: res.data.user_id,
+        user_id: res.data.user_id,
+        menu_id: menu_id?.data[0]?.id,
       });
     }
   } catch (error) {

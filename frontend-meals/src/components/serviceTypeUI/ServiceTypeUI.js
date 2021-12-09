@@ -2,7 +2,7 @@ import React from "react";
 import moment from "moment";
 import FormFields from "../serviceForm/formfields/Formfields";
 
-const ServiceTypeUI = ({ formArray, dayIndex, day, servType, currentMeals}) => {
+const ServiceTypeUI = ({ formArray, dayIndex, day, servType, currentMeals, handleClick}) => {
   const date = moment(day).format("YYYY-MM-DD");
   const serviceType = formArray
     ? formArray.map((element, i) => {
@@ -18,6 +18,7 @@ const ServiceTypeUI = ({ formArray, dayIndex, day, servType, currentMeals}) => {
                 date={date}
                 serviceType={element.serviceType.toUpperCase()}
                 currentMeals={currentMeals}
+                handleClick={handleClick}
               />
             </>
           );

@@ -50,7 +50,7 @@
 .menu-container {
   width: 95%;
   margin: 20px auto;
-  padding: 20px;
+  padding: 10px;
   padding-bottom: 80px;
   background-color: #e6e6fa;
   box-shadow: 0px 0px 15px #a4a4a4;
@@ -63,6 +63,8 @@
   }
 
   .content-container {
-    width: 100%;
+    width: 80%;
+    margin:auto;
+    padding:0;
   }
 }

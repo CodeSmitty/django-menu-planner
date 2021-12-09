@@ -6,9 +6,11 @@ const Layout = ({ children }) => {
   const [authState, dispatch] = useAuthStore();
 
   useEffect(() => {
-    (async () => {
-      return await checkAuthenticated(dispatch);
-    })();
+    // (async () => {
+    //   return await checkAuthenticated(dispatch);
+    // })();
+    checkAuthenticated(dispatch)
+    
   }, []);
 
   return <Fragment>{children}</Fragment>;

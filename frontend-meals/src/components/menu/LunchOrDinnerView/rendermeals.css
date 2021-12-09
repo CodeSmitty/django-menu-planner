@@ -1,0 +1,88 @@
+@import url("https://fonts.googleapis.com/css2?family=Courgette&family=Satisfy&family=Zilla+Slab&display=swap");
+.mealsContainer {
+  width: 100%;
+  height: 100%;
+  margin: 10px 0;
+  padding: 2px 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: space-evenly;
+      -ms-flex-pack: space-evenly;
+          justify-content: space-evenly;
+  -webkit-box-shadow: 1px 1px 10px -4px #8e8b8b;
+          box-shadow: 1px 1px 10px -4px #8e8b8b;
+  position: relative;
+  border-radius: 3.5px;
+}
+
+.mealsContainer .meal_item_container,
+.mealsContainer .diets_logo_container,
+.mealsContainer .edit-delete-container {
+  margin: auto;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 30%;
+          flex: 0 0 30%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  position: relative;
+}
+
+.meal_item_container {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 33%;
+          flex: 0 0 33%;
+  height: 50px;
+}
+
+.meal-image {
+  width: 70px;
+  -o-object-fit: contain;
+     object-fit: contain;
+  padding: 5px;
+  -webkit-transition: all .4s ease-in;
+  transition: all .4s ease-in;
+}
+
+.meal-image:hover {
+  cursor: pointer;
+  position: absolute;
+  top: -25px;
+  left: -35px;
+  width: 300px;
+  height: auto;
+  display: block;
+  z-index: 999;
+}
+
+.meal_items {
+  font-family: "Zilla Slab", "cursive";
+  font-size: 0.9rem;
+  margin: auto;
+  padding: 0;
+}
+
+.edit-delete-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.edit-del-icon {
+  width: 50%;
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 15%;
+          flex: 0 0 15%;
+}
+/*# sourceMappingURL=rendermeals.css.map */

@@ -5,12 +5,14 @@ import Inputs from "../inputs/Inputs";
 import "./formfields.scss";
 import { useStore } from "../../../utility/formOnChangeReducer";
 import useSubmitForm from "../../../utility/customHooks/useApiSubmitForm";
+import ImageSelector from "../../imageSelector/ImageSelector";
+
 
 const FormFields = ({ ...options }) => {
   const [state, dispatch] = useStore();
   const [showForm, setShowForm] = useState(true);
   const [isLoading, setIsLoading] = useState(false);
-  const { menu, serviceType, date } = options;
+  const [imageFile, setImageFile] = useState()
   const formik = useFormik({
     enableReinitialize: true,
     initialValues: {
@@ -19,6 +21,7 @@ const FormFields = ({ ...options }) => {
       is_gluten_free: false,
       is_dairy_free: false,
       mealType: "",
+      img:""
     },
     onSubmit: (actions, values) => {},
   });
@@ -39,6 +42,7 @@ const FormFields = ({ ...options }) => {
       is_vegetarian: formik.values.is_vegetarian,
       is_dairy_free: formik.values.is_dairy_free,
       is_gluten_free: formik.values.is_gluten_free,
+      img:imageFile
     };
 
     setShowForm(false);
@@ -57,6 +61,7 @@ const FormFields = ({ ...options }) => {
                 value={formik.values.mealItem}
                 onChange={formik.handleChange}
                 autoFocus
+                required
               />
             </div>
             <div className="service-type-container">
@@ -65,6 +70,8 @@ const FormFields = ({ ...options }) => {
                 name="mealType"
                 value="entre"
                 type="radio"
+                required
+                
               />
               <label>Entre</label>
               <input
@@ -72,6 +79,7 @@ const FormFields = ({ ...options }) => {
                 name="mealType"
                 value="side"
                 type="radio"
+                required
               />
               <label>side</label>
               <input
@@ -79,6 +87,7 @@ const FormFields = ({ ...options }) => {
                 name="mealType"
                 value="other"
                 type="radio"
+                required
               />
               <label>other</label>
             </div>
@@ -102,6 +111,11 @@ const FormFields = ({ ...options }) => {
               />
               <label>dairy_free</label>
             </div>
+            <di>
+              <ImageSelector handleChange={(e)=>{
+                setImageFile( e.currentTarget.files[0]) 
+              }} />
+            </di>
             <div className="submit-btn-container">
               <button
                 onClick={(e) => {

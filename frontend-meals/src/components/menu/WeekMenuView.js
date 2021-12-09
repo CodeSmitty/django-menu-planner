@@ -8,6 +8,7 @@ import useFetchedDataForm from "../../utility/customHooks/useApiFetchecData";
 import useSubmitForm from "../../utility/customHooks/useApiSubmitForm";
 import { meals } from "../../utility/djangoApi/djangoApi";
 import { useAuthStore } from "../../utility/reducers/auth";
+import axios from 'axios'
 
 const WeeklyMenuView = () => {
   const [state, dispatch] = useStore();
@@ -17,6 +18,7 @@ const WeeklyMenuView = () => {
     currentWeekStart,
     currentWeekEnd
   );
+  const [handleFormSubmit, handleDelete] = useSubmitForm()
 
   const [authState, authDispatch] = useAuthStore();
 
@@ -36,9 +38,10 @@ const WeeklyMenuView = () => {
     // meals(authState.isAuthenticated, authDispatch).then((res) => {
     //   fetchData(authState.isAuthenticated, res);
     // });
-    console.log(authState)
     fetchData(authState.isAuthenticated, authState.menu_id)
   }, [authState, state]);
+
+  
 
   const days = getCurrentDaysOfWeek();
 
@@ -75,6 +78,7 @@ const WeeklyMenuView = () => {
                 date={day}
                 serviceType={"lunch"}
                 meals={currentMeals}
+                handleClick={handleDelete}
               />
             </div>
             <div className="service-form-container">
@@ -84,7 +88,7 @@ const WeeklyMenuView = () => {
                 day={day}
                 servType="lunch"
                 currentMeals={currentMeals}
-                handleFormCreate={handleFormCreate}
+                
               />
             </div>
           </div>

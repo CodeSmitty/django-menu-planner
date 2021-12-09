@@ -11,24 +11,15 @@ const initialState = {
 
 const reducer = (state, action) => {
   switch (action.type) {
+    case "LOGIN_SUCCESS":
     case "AUTHENTICATED_SUCCESS":
       return {
         ...state,
         isAuthenticated: true,
+        user_id: action.user_id,
         role: action.role,
+        user: action.user,
         menu_id: action.menu_id,
-        user: action.user,
-        user_id:action.user_id
-      };
-    case "LOGIN_SUCCESS":
-      return {
-        ...state,
-        isAuthenticated: true,
-        isLoading: true,
-        user_id: action.payload,
-        role: action.role,
-        level: action.id,
-        user: action.user,
       };
     case "CHECK_MEAL_ID":
       return { ...state, menu_id: action.id, name: action.name };

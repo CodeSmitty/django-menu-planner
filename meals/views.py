@@ -11,7 +11,7 @@ from django.contrib.auth.decorators import login_required, permission_required
 from django.views.decorators.csrf import csrf_protect, ensure_csrf_cookie, csrf_exempt
 from django.shortcuts import get_object_or_404, render, redirect
 
-from rest_framework import viewsets, permissions
+from rest_framework import serializers, viewsets, permissions
 from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
@@ -32,15 +32,11 @@ class CheckAuthenticatedView(APIView):
 
     def get(self, format=None ):
         user = self.request.user
-        menu_id = user.menus.all()
-        print(menu_id)
         try:
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 groupName = user.groups.filter(user=user).values()[0]
-                
-                
-                return Response({"isAuthenticated": "success", "user": user.username, "role":groupName['name'], 'menu_id':groupName['id'], "user_id":user.id})
+                return Response({"isAuthenticated": "success", "user": user.username, "role":groupName['name'], "user_id":user.id})
             else:
                 return Response({'isAuthenticated': 'error'})
         except:
@@ -72,7 +68,7 @@ class MenuViewSet(viewsets.ReadOnlyModelViewSet):
             print('no esta aqui señor')
 
 
-class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet, APIView):
+class MealViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     serializer_class = MealSerializer
     pagination_class = MealPagination
 
@@ -97,10 +93,19 @@ class MealViewSet(LoginRequiredMixin, viewsets.ReadOnlyModelViewSet, APIView):
                
                 if serializer.is_valid(raise_exception=True):
                     serializer.save() 
-                    print(serializer.data)
                     return Response({'success':"Your post was successfull.", 'data':serializer.data})
                 return Response({'failure': 'post was not authenticated'})
         return Response({'failure': "user is not authenticated or does not have permission to submit form"})
+
+    def destroy(self,request, *args, **kwargs):
+        instance = self.get_object()
+        meal_item = MealItemSerializer(instance=instance)
+        print(meal_item)
+        if request.method == 'DELETE':
+            print('post request')
+            meal_item = MealSerializer()
+         
+        return Response({'success': 'Your post was deleted'})
     
  
             
@@ -119,7 +124,6 @@ class LoginView(APIView):
         data = self.request.data
         username = data['username']
         password = data['password']
-        print(data)
         
         try:
             user = auth.authenticate(username=username, password=password)
@@ -129,13 +133,12 @@ class LoginView(APIView):
                 auth.login(request, user)
                 groupName = user.groups.filter(user=user).values()[0]
                 group_perms = user.get_group_permissions()
-                print(group_perms)
                 if user.has_perm('meals.change_meal'):
                     print(user)
-                    return Response({"success":"isAuthenticated","role":groupName['name'], "user":user.username, 'user_id':user.id, 'menu_id':groupName['id'] })
+                    return Response({"success":"isAuthenticated","role":groupName['name'], "user":user.username, 'user_id':user.id})
                 if  user.has_perm('meals.view_meal'):
                     print(user)
-                    return Response({'success': 'isAuthenticated',"role":groupName['name'], "user":user.username, 'user_id':user.id, 'level':groupName['id']})
+                    return Response({'success': 'isAuthenticated',"role":groupName['name'], "user":user.username, 'user_id':user.id})
                 else:
                     return Response({"error":"You do not have permission to see this page"})
             else:
@@ -153,8 +156,13 @@ class LogoutView(APIView):
         except:
             return Response({'error':"There was an error loging out"})
 
+
+
 def index(request):
     return render(request, 'build/index.html')
+
+
+
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
 class GetCSRFToken(APIView):
@@ -162,6 +170,9 @@ class GetCSRFToken(APIView):
 
     def get(self, request, format=None):
         return Response({'success': 'CSRF cookie set'})
+
+
+
 
 
 class ClientViewset(viewsets.ReadOnlyModelViewSet):
@@ -174,5 +185,5 @@ class ClientViewset(viewsets.ReadOnlyModelViewSet):
 
 
     
-
+    
 

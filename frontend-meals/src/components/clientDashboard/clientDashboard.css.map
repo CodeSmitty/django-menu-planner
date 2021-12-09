@@ -1,0 +1,9 @@
+{
+    "version": 3,
+    "mappings": "AAAA,AAAA,yBAAyB,CAAA;EACrB,OAAO,EAAC,IAAI;EACZ,eAAe,EAAE,MAAM;EACvB,SAAS,EAAC,QAAQ;EAClB,OAAO,EAAC,GAAG;CACd;;AAED,AAAA,gBAAgB,CAAA;EACZ,IAAI,EAAC,OAAO;CAEf;;AAED,AAAA,mBAAmB,CAAA;EACf,OAAO,EAAC,IAAI;EACZ,eAAe,EAAE,aAAa;EAC9B,SAAS,EAAC,UAAU;CAEvB;;AAED,AAAA,WAAW,CAAA;EACP,SAAS,EAAE,MAAM;CAEpB",
+    "sources": [
+        "clientDashboard.scss"
+    ],
+    "names": [],
+    "file": "clientDashboard.css"
+}
