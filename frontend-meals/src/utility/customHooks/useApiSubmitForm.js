@@ -1,17 +1,15 @@
 import { useState } from "react";
 import { useStore } from "../formOnChangeReducer";
 import { useAuthStore } from "../reducers/auth";
-import { post } from "../services/firebase/firebase";
 import { storage } from "../services/firebase/firebase.utility";
 import Cookies from "js-cookie";
-import axios from "axios"; 
+import axios from '../axios.orders'
 
 const useSubmitForm = (props) => {
   const [state, dispatch] = useStore();
   const [authState, authDispatch] = useAuthStore();
   //const [progress, setProgress] = useState(0);
   const [error, setError] = useState("");
-  const [response, setResponse] = useState();
 
   const menu_id = authState.menu_id
 
@@ -64,7 +62,7 @@ const useSubmitForm = (props) => {
                 };
                 const body = JSON.stringify(testData);
                 const res = await axios.post(
-                  `http://localhost:3000/api/menus/${menu_id}/meals/`,
+                  `menus/${menu_id}/meals/`,
                   body,
                   config
                 );
@@ -93,8 +91,7 @@ const useSubmitForm = (props) => {
           ]
         };
         const body = JSON.stringify(testData);
-        const res =await  axios.post(
-          `http://localhost:3000/api/menus/${menu_id}/meals/`,
+        const res =await  axios.post(`menus/${menu_id}/meals/`,
           body,
           config
         );
@@ -112,29 +109,65 @@ const useSubmitForm = (props) => {
   };
 
 
-  const handleDelete =async (e, mealItemId) =>{
-    console.log(mealItemId)
+  const handleDelete =async (mealId,  mealItemId, data) =>{
+    console.log('Your meal item was edited')
+    console.log({
+      mealid:mealId,
+      mealItemId:mealItemId,
+      data:data
+    })
+
+    //  const data = {data:mealItemId}
+    //  const body = JSON.stringify(data);
+    //  console.log(body)
+    //   const config = {
+    //     method: "DELETE",
+    //     headers: {
+    //       Accept: "application/json",
+    //       "Content-Type": "application/json",
+    //       "X-CSRFToken": Cookies.get("csrftoken"),
+    //     },
+    //     data:body
+    //   };
+    //  const res = await axios.delete(`meal_items/${mealItemId}/`,
+    //    config, 
+        
+    //  ).then(res => {
+    //    console.log(res)
+    //  });
+
+  }
+
+  const handleEdit = async (e, meal_id, mealItemId)=>{
+
+     const testData = {
+         
+           id: mealItemId,
+           name:"",
+           is_vegetarian:true,
+           is_gluten_free: true,
+           is_dairy_free: true,
+           type: 'side',
+           url: "",
+        
+     };
+    const body = JSON.stringify(testData);
      const config = {
-       method: "DELETE",
+       method: "PUT",
        headers: {
          Accept: "application/json",
          "Content-Type": "application/json",
          "X-CSRFToken": Cookies.get("csrftoken"),
-       },
+       }
      };
-
-     const data = 111
-     const body = JSON.stringify(data);
-     console.log(body)
-     const res = await axios.delete(
-       `http://localhost:3000/api/menus/${menu_id}/meals/46/`,
-       config
-     );
-
-     console.log(res)
+     const res = await axios
+       .put(`meal_items/${mealItemId}/`,body, config)
+       .then((res) => {
+         console.log(res);
+       });
   }
 
-  return [handleFormSubmit, handleDelete];
+  return [handleFormSubmit, handleDelete, handleEdit];
 };
 
 export default useSubmitForm;

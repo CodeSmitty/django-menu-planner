@@ -4,6 +4,7 @@ import { useAuthStore } from "../../utility/reducers/auth";
 const UnlockAccess = ({ children, roles }) => {
   const [state, dispatch] = useAuthStore();
   const [permission, setPermission] = useState();
+  
 
   useEffect(() => {
     if (state.role === roles) {

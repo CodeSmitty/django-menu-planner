@@ -7,10 +7,24 @@ import edit from "../../../assets/edit.png";
 import trash from "../../../assets/trash.png";
 import "./rendermeals.scss";
 
-const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals, handleClick }) => {
+const RenderMeals = ({ date, serviceType, meals, handleClick, handleEdit }) => {
+  const [showForm, setShowForm] = useState({
+  
+    show:false,
+    itemId:null,
+    mealId:null, 
+    eventData: null
+  })
   useEffect(() => {
   }, [meals]);
 
+  
+   
+    if(showForm.show){
+      console.log('show form')
+    }else if(!showForm.show){
+      console.log("don't show form")
+    }
   
 
   const day = moment(date).format("YYYY-MM-DD");
@@ -22,7 +36,9 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals, handleClic
     : null;
   const mealData = data
     ? data.map((item, i) => {
+      
         return item.items.map((meal) => {
+         console.log(meal.id)
           return (
             <div
               className="mealsContainer"
@@ -33,7 +49,7 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals, handleClic
                     ? "1px solid green"
                     : "1px solid yellow",
               }}
-            >
+              >
               <div className="meal_item_container">
                 {meal?.url ? (
                   <img
@@ -77,12 +93,12 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals, handleClic
               </div>
               <div className="edit-delete-container">
                 <div className="edit-del-icon">
-                  <button>
+                  <button id={item.id} onClick={(e)=>{setShowForm({show:!showForm.show, mealId:item?.id, itemId:meal?.id, eventData:e})}}>
                     <img alt="edit icon" src={edit} />
                   </button>
                 </div>
                 <div className="edit-del-icon">
-                  <button onClick={(e) => handleClick(e, meal?.id)}>
+                  <button onClick={(e) => handleClick(item?.id, meal?.id)}>
                     <img alt="delete icon" src={trash} />
                   </button>
                 </div>
@@ -92,7 +108,18 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals, handleClic
         });
       })
     : null;
-  return <div>{mealData}</div>;
+
+   
+     const editMealData = mealData ?  mealData.filter(meal =>{
+       console.log(meal)
+       
+      return meal.key === showForm.itemId
+    }) :null;
+
+    console.log(editMealData)
+    
+    
+  return <div>{showForm.show ? editMealData :mealData}</div>;
 };
 
 export default RenderMeals;

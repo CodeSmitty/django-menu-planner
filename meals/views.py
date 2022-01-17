@@ -16,7 +16,7 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 from rest_framework.permissions import BasePermission, SAFE_METHODS, IsAuthenticated
 
-from .models import Menu, Meal, ClientHouse
+from .models import Menu, Meal, ClientHouse, MealItem
 from .pagination import MealPagination
 from .serializers import MenuSerializer, MealSerializer, ClientSerializer, UserSerializer, MealItemSerializer
 
@@ -30,18 +30,17 @@ class CheckAuthenticatedView(APIView):
     def get_extra_actions(cls):
         return []
 
-    def get(self, format=None ):
+    def get(self, format=None):
         user = self.request.user
         try:
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 groupName = user.groups.filter(user=user).values()[0]
-                return Response({"isAuthenticated": "success", "user": user.username, "role":groupName['name'], "user_id":user.id})
+                return Response({"isAuthenticated": "success", "user": user.username, "role": groupName['name'], "user_id": user.id})
             else:
                 return Response({'isAuthenticated': 'error'})
         except:
             return Response({'error': 'Something went wrong when checking authentication status'})
-
 
 
 class CreateMenuPermission(BasePermission):
@@ -50,12 +49,13 @@ class CreateMenuPermission(BasePermission):
     def get_extra_actions(cls):
         return []
 
-    def has_object_permission(self,request, view, obj):
+    def has_object_permission(self, request, view, obj):
 
         if request.method in SAFE_METHODS:
             return True
-        
+
         return obj.user == request.user
+
 
 class MenuViewSet(viewsets.ReadOnlyModelViewSet):
     queryset = Menu.objects.all()
@@ -77,7 +77,7 @@ class MealViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
             queryset = Menu.objects.all()
             menu = get_object_or_404(
                 queryset, pk=self.kwargs['menu_pk'], users=self.request.user)
-            
+
             return Meal.objects.filter(menu=menu)
         else:
             print("not auth")
@@ -86,29 +86,74 @@ class MealViewSet(LoginRequiredMixin, viewsets.ModelViewSet):
     def create(self, request, menu_pk):
         data = self.request.data
         user = self.request.user
-        
+
         if user.is_authenticated and user.has_perm("meals.change_menu"):
-            if request.method == "POST": # use put instead of post. 
-                serializer =MealSerializer( data=data, partial=True)
-               
+            if request.method == "POST":  # use put instead of post.
+                serializer = MealSerializer(data=data, partial=True)
+
                 if serializer.is_valid(raise_exception=True):
-                    serializer.save() 
-                    return Response({'success':"Your post was successfull.", 'data':serializer.data})
+                    serializer.save()
+                    return Response({'success': "Your post was successfull.", 'data': serializer.data})
                 return Response({'failure': 'post was not authenticated'})
         return Response({'failure': "user is not authenticated or does not have permission to submit form"})
 
-    def destroy(self,request, *args, **kwargs):
+    def destroy(self, request, *args, **kwargs):
         instance = self.get_object()
-        meal_item = MealItemSerializer(instance=instance)
-        print(meal_item)
         if request.method == 'DELETE':
             print('post request')
             meal_item = MealSerializer()
-         
+
         return Response({'success': 'Your post was deleted'})
-    
- 
-            
+
+
+class MealItemView(LoginRequiredMixin, viewsets.ModelViewSet):
+    serializer_class = MealItemSerializer
+
+    def get_queryset(self):
+        if self.request.user.is_authenticated:
+            print(self.request.user)
+            return MealItem.objects.all()
+        else:
+            print("not auth")
+            return HttpResponseRedirect(self.request, "/login")
+
+    def destroy(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = self.request.user
+        try:
+            if request.method == 'DELETE':
+                if user.is_authenticated and user.has_perm('meals.delete_mealitem'):
+                    self.perform_destroy(instance)
+                    return Response({"Success": "You have succesfully deleted meal item."})
+                return Response({'Failure': 'You do not have permission to make this request. Please refer to admin'})
+        except:
+            return Response({'Error': self.request.error.message})
+
+    def update(self, request, *args, **kwargs):
+        instance = self.get_object()
+        user = self.request.user
+        data = self.request.data
+        datas = self
+
+        
+        try:
+            if request.method == 'PUT':
+                if user.is_authenticated:
+                    print(instance)
+                    partial = kwargs.pop('partial', False)
+                    instance = self.get_object()
+                    serializer = self.get_serializer(instance, data=self.request.data, partial=partial)
+                    print(serializer)
+                    serializer.is_valid(raise_exception=True)
+                    self.perform_update(serializer)
+                    
+                    print('update')
+                    return Response({'Success':'You have succesfully updated meal.', 'data':serializer.data})
+        except:
+            return Response({'error': 'error'})
+
+        
+
 
 @method_decorator(csrf_exempt, name='dispatch')
 class LoginView(APIView):
@@ -124,23 +169,22 @@ class LoginView(APIView):
         data = self.request.data
         username = data['username']
         password = data['password']
-        
+
         try:
             user = auth.authenticate(username=username, password=password)
 
-            
             if user is not None:
                 auth.login(request, user)
                 groupName = user.groups.filter(user=user).values()[0]
                 group_perms = user.get_group_permissions()
                 if user.has_perm('meals.change_meal'):
                     print(user)
-                    return Response({"success":"isAuthenticated","role":groupName['name'], "user":user.username, 'user_id':user.id})
-                if  user.has_perm('meals.view_meal'):
+                    return Response({"success": "isAuthenticated", "role": groupName['name'], "user": user.username, 'user_id': user.id})
+                if user.has_perm('meals.view_meal'):
                     print(user)
-                    return Response({'success': 'isAuthenticated',"role":groupName['name'], "user":user.username, 'user_id':user.id})
+                    return Response({'success': 'isAuthenticated', "role": groupName['name'], "user": user.username, 'user_id': user.id})
                 else:
-                    return Response({"error":"You do not have permission to see this page"})
+                    return Response({"error": "You do not have permission to see this page"})
             else:
                 return Response({'error': 'Error Authenticating'})
         except:
@@ -152,16 +196,13 @@ class LogoutView(APIView):
     def post(self, request, format=None):
         try:
             auth.logout(request)
-            return Response({'success':"Logged Out"})
+            return Response({'success': "Logged Out"})
         except:
-            return Response({'error':"There was an error loging out"})
-
+            return Response({'error': "There was an error loging out"})
 
 
 def index(request):
     return render(request, 'build/index.html')
-
-
 
 
 @method_decorator(ensure_csrf_cookie, name='dispatch')
@@ -172,18 +213,4 @@ class GetCSRFToken(APIView):
         return Response({'success': 'CSRF cookie set'})
 
 
-
-
-
-class ClientViewset(viewsets.ReadOnlyModelViewSet):
-    # queryset = ClientHouse.objects.all()
-
-    def get_queryset(self):
-        menu= Menu.objects.all()
-        clientMenu = ClientHouse.objects.all()
-        password = ClientHouse.objects.filter(password='skwl', name='Sigma Kappa')
-
-
-    
-    
 

@@ -8,6 +8,7 @@ import { menus } from "../../utility/data";
 
 const NavBar = () => {
   const [state, dispatch] = useAuthStore();
+ 
   const handleLogout = () => {
     checkLogout(dispatch);
   };

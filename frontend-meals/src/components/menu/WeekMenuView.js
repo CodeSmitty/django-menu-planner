@@ -12,13 +12,22 @@ import axios from 'axios'
 
 const WeeklyMenuView = () => {
   const [state, dispatch] = useStore();
+  const [showForm, setShowForm] = useState(false)
   let currentWeekStart = moment().startOf("week");
   let currentWeekEnd = moment().endOf("week");
   const [fetchData, currentMeals] = useFetchedDataForm(
     currentWeekStart,
     currentWeekEnd
   );
-  const [handleFormSubmit, handleDelete] = useSubmitForm()
+  const [handleFormSubmit, handleDelete, handleEdit] = useSubmitForm()
+
+
+  const showFormOnEdit = (meal_id, item_id,data) =>{
+
+    setShowForm(!showForm)
+
+    handleEdit(meal_id, item_id, data)
+  }
 
   const [authState, authDispatch] = useAuthStore();
 
@@ -72,13 +81,14 @@ const WeeklyMenuView = () => {
           </div>
           <div className="service-content-container">
             <div className="service-render-container">
-              <RenderMeals
+               <RenderMeals
                 formArray={input}
                 dayIndex={i}
                 date={day}
                 serviceType={"lunch"}
                 meals={currentMeals}
                 handleClick={handleDelete}
+                handleEdit={showFormOnEdit}
               />
             </div>
             <div className="service-form-container">
@@ -88,7 +98,7 @@ const WeeklyMenuView = () => {
                 day={day}
                 servType="lunch"
                 currentMeals={currentMeals}
-                
+                handleEdit={showFormOnEdit}
               />
             </div>
           </div>

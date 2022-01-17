@@ -2,6 +2,7 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 export const checkAuthenticated = async (dispatch, request) => {
+  
   const config = {
     headers: {
       Accept: "application/json",
@@ -15,6 +16,9 @@ export const checkAuthenticated = async (dispatch, request) => {
       "http://localhost:3000/api/authenticated",
       config
     );
+
+    
+
     if (res.data.error || res.data.isAuthenticated === "error") {
       console.log("Error: You weren't authenticated my guy.");
     } else if (res.data.isAuthenticated === "success") {
@@ -36,6 +40,7 @@ export const checkAuthenticated = async (dispatch, request) => {
 };
 
 export const login = async (username, password, dispatch) => {
+  console.log(username, password)
   const config = {
     headers: {
       Accept: "application/json",
@@ -52,6 +57,7 @@ export const login = async (username, password, dispatch) => {
       body,
       config
     );
+ 
 
     if (res.data.success === "isAuthenticated") {
       console.log("staff: ", res.data);

@@ -12,6 +12,14 @@ const initialState = {
 const reducer = (state, action) => {
   switch (action.type) {
     case "LOGIN_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user_id: action.user_id,
+        role: action.role,
+        user: action.user,
+        menu_id: action.menu_id,
+      };
     case "AUTHENTICATED_SUCCESS":
       return {
         ...state,
