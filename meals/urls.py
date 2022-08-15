@@ -10,28 +10,25 @@ from .views import (
     # mealQueries,
     MealViewSet,
     MenuViewSet,
-    ClientViewset,
     LogoutView, 
+    MealItemView
 )
 
 router = SimpleRouter()
 router.register(r'menus', MenuViewSet, basename="menus")
-router.register(r'house_menu', ClientViewset, basename='house_name')
 
 menu_router = NestedSimpleRouter(router, r'menus', lookup='menu')
 menu_router.register(r'meals', MealViewSet, basename='menu-meals')
 
-
 urlpatterns = [
     path('api/', include(router.urls)),
     path('api/', include(menu_router.urls)),
+    path('api/meal_items/<int:pk>/', MealItemView.as_view({'delete':"destroy", 'get':'retrieve', 'put':'update'}), name='item-detail'),
     path('api/authenticated', CheckAuthenticatedView.as_view(), name='authenticated'),
     path('', index, name='index'),
     path('api/csrf_cookie', GetCSRFToken.as_view()),
     path('api/login', LoginView.as_view(), name='login'),
     path('api/logout', LogoutView.as_view(), name='logout'),
-    
-    # path('matches/', mealQueries.as_view()),
 ]
 
 

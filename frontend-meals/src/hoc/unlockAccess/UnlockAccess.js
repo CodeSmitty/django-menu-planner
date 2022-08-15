@@ -4,6 +4,7 @@ import { useAuthStore } from "../../utility/reducers/auth";
 const UnlockAccess = ({ children, roles }) => {
   const [state, dispatch] = useAuthStore();
   const [permission, setPermission] = useState();
+  
 
   useEffect(() => {
     if (state.role === roles) {
@@ -13,7 +14,7 @@ const UnlockAccess = ({ children, roles }) => {
     }
   }, [state.isAuthenticated, state.role, permission]);
 
-  let hasPermission = false;
+  let hasPermission = true;
   if (roles && roles.length > 0) {
     hasPermission = roles.includes(state.role);
   }

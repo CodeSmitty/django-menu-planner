@@ -7,39 +7,29 @@ const initialState = {
   role: null,
   menu_id: null,
   user: null,
-  isLoading: null,
-  name: null,
 };
 
 const reducer = (state, action) => {
   switch (action.type) {
-    case "AUTHENTICATED_SUCCESS":
-      return {
-        ...state,
-        isAuthenticated: true,
-        isLoading: false,
-        role: action.role,
-        id: action.id,
-        user: action.user,
-      };
     case "LOGIN_SUCCESS":
       return {
         ...state,
         isAuthenticated: true,
-        isLoading: true,
-        user_id: action.payload,
+        user_id: action.user_id,
         role: action.role,
-        level: action.id,
         user: action.user,
+        menu_id: action.menu_id,
       };
-    case "CLIENT_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "client" };
-    case "CHEF_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "staff" };
-    case "ADMIN_SUCCESS":
-      return { ...state, isAuthenticated: true, role: "admin" };
+    case "AUTHENTICATED_SUCCESS":
+      return {
+        ...state,
+        isAuthenticated: true,
+        user_id: action.user_id,
+        role: action.role,
+        user: action.user,
+        menu_id: action.menu_id,
+      };
     case "CHECK_MEAL_ID":
-      console.log(action);
       return { ...state, menu_id: action.id, name: action.name };
     case "LOGGOUT_SUCCESS":
       return { ...state, isAuthenticated: false };

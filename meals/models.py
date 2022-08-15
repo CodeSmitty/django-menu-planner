@@ -41,7 +41,6 @@ class Meal(models.Model):
         ],
         max_length=10,
     )
-    url = models.URLField(max_length=200, default="")
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
@@ -53,7 +52,7 @@ class Meal(models.Model):
     objects = MealQuerySet.as_manager()
 
     class Meta:
-        unique_together = ['menu', 'date', 'type', 'url']
+        unique_together = ['menu', 'date', 'type']
         ordering = ['date', '-type']
 
 
@@ -95,6 +94,7 @@ class MealItem(models.Model):
         auto_now=True,
         editable=False,
     )
+    url = models.URLField(max_length=200, default="", blank=True)
 
 
 class ClientHouse(models.Model):

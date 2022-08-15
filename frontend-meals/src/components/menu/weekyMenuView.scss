@@ -1,0 +1,71 @@
+.day-container{
+    border-radius: 7.5px;
+    box-shadow: inset 1px 0px 8px -1px #c4c1c1;
+    margin:10px auto;
+    padding:5px;
+    background-color: #f7f7f7;
+
+    .date_title{
+        width:80%;
+        border-bottom: 1px solid #477baa;
+        margin:auto;
+        box-shadow:0 9px 10px -8px gray;
+    }
+}
+
+button {
+   border:none;
+   background-color:transparent;
+   outline:none;
+}
+
+button:hover{
+    cursor: pointer;
+}
+
+.diets-imgs {
+  width: 20px;
+  height: 20px;
+}
+
+.serviceType-container{
+    padding:10px;
+    display:flex;
+    flex-direction: column;
+
+    .serviceType-title-container{
+        display: flex;
+        flex-flow:row nowrap;
+        justify-content: space-between;
+    }
+
+    .serviceType-title{
+        float:left;
+        padding:0;
+        margin:0;
+        }
+}
+
+.service-content-container{
+    display:flex;
+    justify-content: center;
+    flex-flow:row wrap;
+
+    .service-render-container{
+        flex:0 0 100%;
+    }
+
+    .service-form-container{
+        flex:0 0 100%;
+        width:100%;
+    }
+}
+.add-meal-btn{
+            color:rgb(0, 0, 0);
+
+            &:hover{
+                cursor: pointer;
+                color:rgb(57, 58, 56);
+            }
+        }
+        

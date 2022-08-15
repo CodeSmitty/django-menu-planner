@@ -27,7 +27,8 @@ SECRET_KEY = '_^k34)!8q9y$)s2*sb7&ttr%(%xqj-65l8kqeyv!l1oy8a4=#+'
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost", '127.0.0.1']
+ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost", '127.0.0.1',
+                 '192.168.1.140', "localhost:3000", "http://localhost:3000"]
 
 
 # Application definition
@@ -64,13 +65,13 @@ MIDDLEWARE = [
 
 ROOT_URLCONF = 'menu_planner.urls'
 
-# CSRF_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
-# SESSION_COOKIE_SECURE = True
+SESSION_COOKIE_SECURE = True
 
 CSRF_COOKIE_SAMESITE = 'Strict'
 SESSION_COOKIE_SAMESITE = 'Strict'
-SESSION_COOKIE_HTTPONLY = True
+SESSION_COOKIE_HTTPONLY = False
 CSRF_COOKIE_HTTPONLY = False
 
 TEMPLATES = [
@@ -89,11 +90,14 @@ TEMPLATES = [
     },
 ]
 
-CORS_ALLOWED_ORIGINS = [
+CORS_ALLOWED_ALL_ORIGINS = True
+CORS_ALLOWED_CREDENTIALS = True
+
+CORS_ORIGIN_WHITELIST =[
     "http://localhost:3000",
     "http://localhost:8000",
     "http://127.0.0.1:8000",
-    "http://127.0.0.1:8000"
+    "http://127.0.0.1:3000", 
 ]
 
 STATICFILES_DIRS = (

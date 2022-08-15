@@ -1,0 +1,84 @@
+.dashboard-container {
+  width: 100%;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.side-bar-container {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 20%;
+          flex: 0 0 20%;
+  background-color: #0d0d0d;
+  width: 100%;
+}
+
+.calendar-container {
+  margin: 20px auto;
+}
+
+.react-calendar {
+  margin: 30px auto;
+  background-color: lavender;
+}
+
+.dash-menu-container {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 200px;
+  background-color: transparent;
+  color: white;
+  padding: 20px;
+  -webkit-box-shadow: 2px 1px 9px #7a7a7a;
+          box-shadow: 2px 1px 9px #7a7a7a;
+}
+
+.dash-menu-container > ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+}
+
+.dash-menu-container > ul > li {
+  width: 100%;
+}
+
+.content-container {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 70%;
+          flex: 0 0 70%;
+  padding: 50px;
+}
+
+.menu-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  padding-bottom: 80px;
+  background-color: #e6e6fa;
+  -webkit-box-shadow: 0px 0px 7px #a4a4a4;
+          box-shadow: 0px 0px 7px #a4a4a4;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 800px) {
+  .dashboard-container {
+    -webkit-box-orient: vertical;
+    -webkit-box-direction: normal;
+        -ms-flex-flow: column wrap;
+            flex-flow: column wrap;
+  }
+  .content-container {
+    width: 80%;
+    margin: auto;
+    padding: 0;
+  }
+}
+/*# sourceMappingURL=adminDashboard.css.map */

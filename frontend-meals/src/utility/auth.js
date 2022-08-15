@@ -6,22 +6,35 @@ export const checkAuthenticated = async (dispatch, request) => {
     headers: {
       Accept: "application/json",
       "Content-Type": "application/json",
+      "X-CSRFToken": Cookies.get("csrftoken"),
     },
   };
+  const res = await axios.get(
+    "http://localhost:3000/api/authenticated",
+    config
+  );
 
   try {
     const res = await axios.get(
-      "http://localhost:8000/api/authenticated",
+      "http://localhost:3000/api/authenticated",
       config
     );
+
     if (res.data.error || res.data.isAuthenticated === "error") {
       console.log("Error: You weren't authenticated my guy.");
     } else if (res.data.isAuthenticated === "success") {
+      console.log("you were authenticated: Auth.js 25");
+      const menu_id = await axios.get(
+        "http://localhost:3000/api/menus/",
+        config
+      );
+
       dispatch({
         type: "AUTHENTICATED_SUCCESS",
         user: res.data.user,
         role: res.data.role,
-        id: res.data.role_id,
+        user_id: res.data.user_id,
+        menu_id: menu_id.data[0].id,
       });
     }
   } catch (err) {
@@ -40,24 +53,27 @@ export const login = async (username, password, dispatch) => {
 
   try {
     const body = JSON.stringify({ username, password });
+
     const res = await axios.post(
-      "http://localhost:8000/api/login",
+      "http://localhost:3000/api/login",
       body,
       config
     );
 
     if (res.data.success === "isAuthenticated") {
-      console.log("staff: ", res.data);
+      const menu_id = await axios.get(
+        "http://localhost:3000/api/authenticated",
+        config
+      );
+
       dispatch({
         type: "LOGIN_SUCCESS",
         user: res.data.user,
         role: res.data.role,
         level: res.data.role_id,
-        id: res.data.user_id,
+        user_id: res.data.user_id,
+        menu_id: menu_id?.data[0]?.user_id,
       });
-    } else if (res.data.success === "isAuthenticated") {
-      console.log("client: ", res.data);
-      dispatch({ type: "LOGIN_SUCCESS" });
     }
   } catch (error) {
     console.log(error);
@@ -80,7 +96,7 @@ export const checkLogout = async (dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:8000/api/logout",
+      "http://localhost:3000/api/logout",
       body,
       config
     );
