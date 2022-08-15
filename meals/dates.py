@@ -18,6 +18,7 @@ def day_of_week(date=today()):
 
 
 def start_of_week(date=today()):
+   
     return date - datetime.timedelta(days=day_of_week(date))
 
 
@@ -25,13 +26,14 @@ def end_of_week(date=today()):
     return start_of_week(date) + datetime.timedelta(days=6)
 
 
-def previous_week(date=start_of_week()):
-    return date - datetime.timedelta(weeks=1)
+def previous_week(date=today()):
+    return date - datetime.timedelta(days=day_of_week(date))- datetime.timedelta(weeks=1)
 
 
-def next_week(date=start_of_week()):
-    return date + datetime.timedelta(weeks=1)
+def next_week(date=today()):
+    return date - datetime.timedelta(days=day_of_week(date)) + datetime.timedelta(weeks=1)
 
 
 def week_range(date=today()):
+   
     return [start_of_week(date), end_of_week(date)]

@@ -1,0 +1,70 @@
+.dashboard-container {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  flex-flow: row wrap;
+}
+
+.side-bar-container {
+  flex: 0 0 20%;
+  background-color: #0d0d0d;
+  width:100%;
+
+  // border:solid 1px black;
+}
+
+.calendar-container {
+  margin: 20px auto;
+}
+
+.react-calendar {
+  margin: 30px auto;
+  background-color: lavender;
+}
+
+.dash-menu-container {
+  margin: 20px auto;
+  width: 80%;
+  max-width: 200px;
+  background-color: transparent;
+  color: white;
+  padding: 20px;
+  box-shadow: 2px 1px 9px #7a7a7a;
+}
+
+.dash-menu-container > ul {
+  list-style-type: none;
+  text-align: center;
+  padding: 0;
+}
+
+.dash-menu-container > ul > li {
+  width: 100%;
+}
+
+.content-container {
+  flex: 0 0 70%;
+  padding: 50px;
+}
+
+.menu-container {
+  width: 80%;
+  margin: 20px auto;
+  padding: 10px;
+  padding-bottom: 80px;
+  background-color: #e6e6fa;
+  box-shadow: 0px 0px 7px #a4a4a4;
+  border-radius: 15px;
+}
+
+@media screen and (max-width: 800px) {
+  .dashboard-container {
+    flex-flow: column wrap;
+  }
+
+  .content-container {
+    width: 80%;
+    margin:auto;
+    padding:0;
+  }
+}

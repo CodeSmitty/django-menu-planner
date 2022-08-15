@@ -1,10 +1,12 @@
 from django.db import models
 
 from .dates import week_range
+from django.contrib.auth.models import User
 
 
 class Menu(models.Model):
     name = models.CharField(max_length=100)
+    users = models.ManyToManyField(User, related_name='menus')
     created_at = models.DateTimeField(
         auto_now_add=True,
         editable=False,
@@ -13,6 +15,8 @@ class Menu(models.Model):
         auto_now=True,
         editable=False,
     )
+
+    
 
     def __str__(self):
         return self.name
@@ -90,3 +94,17 @@ class MealItem(models.Model):
         auto_now=True,
         editable=False,
     )
+    url = models.URLField(max_length=200, default="", blank=True)
+
+
+class ClientHouse(models.Model):
+    name = models.CharField(max_length=100 )
+    house_menu = models.ForeignKey(Menu, related_name='menu', on_delete=models.CASCADE)
+    password = models.CharField(max_length=20)
+
+    def __str__(self):
+        return self.name
+
+    
+
+        

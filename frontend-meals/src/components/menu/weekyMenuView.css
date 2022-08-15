@@ -1,0 +1,97 @@
+.day-container {
+  border-radius: 7.5px;
+  -webkit-box-shadow: inset 1px 0px 8px -1px #c4c1c1;
+          box-shadow: inset 1px 0px 8px -1px #c4c1c1;
+  margin: 10px auto;
+  padding: 5px;
+  background-color: #f7f7f7;
+}
+
+.day-container .date_title {
+  width: 80%;
+  border-bottom: 1px solid #477baa;
+  margin: auto;
+  -webkit-box-shadow: 0 9px 10px -8px gray;
+          box-shadow: 0 9px 10px -8px gray;
+}
+
+button {
+  border: none;
+  background-color: transparent;
+  outline: none;
+}
+
+button:hover {
+  cursor: pointer;
+}
+
+.diets-imgs {
+  width: 20px;
+  height: 20px;
+}
+
+.serviceType-container {
+  padding: 10px;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: vertical;
+  -webkit-box-direction: normal;
+      -ms-flex-direction: column;
+          flex-direction: column;
+}
+
+.serviceType-container .serviceType-title-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: justify;
+      -ms-flex-pack: justify;
+          justify-content: space-between;
+}
+
+.serviceType-container .serviceType-title {
+  float: left;
+  padding: 0;
+  margin: 0;
+}
+
+.service-content-container {
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row wrap;
+          flex-flow: row wrap;
+}
+
+.service-content-container .service-render-container {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+}
+
+.service-content-container .service-form-container {
+  -webkit-box-flex: 0;
+      -ms-flex: 0 0 100%;
+          flex: 0 0 100%;
+  width: 100%;
+}
+
+.add-meal-btn {
+  color: black;
+}
+
+.add-meal-btn:hover {
+  cursor: pointer;
+  color: #393a38;
+}
+/*# sourceMappingURL=weekyMenuView.css.map */

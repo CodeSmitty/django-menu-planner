@@ -1,0 +1,26 @@
+.nav-container{
+    margin-top:20px;
+    width:100%;
+}
+
+.ul-container{
+    list-style-type: none;
+    display:flex;
+    flex-flow:row nowrap;
+    justify-content: flex-end;
+}
+
+.auth-link-container{
+    margin:0;
+    display:flex;
+    flex-flow:row nowrap;
+}
+
+.nav-li{
+    padding:10px;
+}
+
+.active-links{
+    text-decoration: none;
+    color:white;
+}

@@ -9,8 +9,15 @@ from meals.dates import previous_week, end_of_week, next_day
 class Command(BaseCommand):
     help = 'Inserts test data'
 
+    def add_arguments(self, parser):
+        parser.add_argument(
+            '--menu',
+            default='Sigma Kappa',
+            help='Name of the menu to seed',
+        )
+
     def handle(self, *args, **options):
-        menu, created = Menu.objects.get_or_create(name='Test Menu')
+        menu, created = Menu.objects.get_or_create(name=options['menu'])
 
         date = previous_week()
         end_date = end_of_week()

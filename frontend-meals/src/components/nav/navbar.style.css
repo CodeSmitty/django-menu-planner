@@ -1,0 +1,39 @@
+.nav-container {
+  margin-top: 20px;
+  width: 100%;
+}
+
+.ul-container {
+  list-style-type: none;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+  -webkit-box-pack: end;
+      -ms-flex-pack: end;
+          justify-content: flex-end;
+}
+
+.auth-link-container {
+  margin: 0;
+  display: -webkit-box;
+  display: -ms-flexbox;
+  display: flex;
+  -webkit-box-orient: horizontal;
+  -webkit-box-direction: normal;
+      -ms-flex-flow: row nowrap;
+          flex-flow: row nowrap;
+}
+
+.nav-li {
+  padding: 10px;
+}
+
+.active-links {
+  text-decoration: none;
+  color: white;
+}
+/*# sourceMappingURL=navbar.style.css.map */
