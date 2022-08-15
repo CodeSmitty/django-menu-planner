@@ -3,31 +3,24 @@ import moment from "moment";
 import "./weekyMenuView.scss";
 import { useStore } from "../../utility/formOnChangeReducer";
 import ServiceTypeUI from "../serviceTypeUI/ServiceTypeUI";
-import RenderMeals from "./LunchOrDinnerView/RenderMeals";
+import RenderMeals from "./renderMeals/RenderMeals";
 import useFetchedDataForm from "../../utility/customHooks/useApiFetchecData";
 import useSubmitForm from "../../utility/customHooks/useApiSubmitForm";
 import { meals } from "../../utility/djangoApi/djangoApi";
 import { useAuthStore } from "../../utility/reducers/auth";
-import axios from 'axios'
+import axios from "axios";
 
-const WeeklyMenuView = () => {
+const WeeklyMenuView = ({ calendarDates, arrowDates }) => {
   const [state, dispatch] = useStore();
-  const [showForm, setShowForm] = useState(false)
-  let currentWeekStart = moment().startOf("week");
-  let currentWeekEnd = moment().endOf("week");
+  const [showForm, setShowForm] = useState(false);
+  let currentWeekStart = moment(calendarDates).startOf("week");
+  let currentWeekEnd = moment(calendarDates).endOf("week");
   const [fetchData, currentMeals] = useFetchedDataForm(
     currentWeekStart,
     currentWeekEnd
   );
-  const [handleFormSubmit, handleDelete, handleEdit] = useSubmitForm()
 
-
-  const showFormOnEdit = (meal_id, item_id,data) =>{
-
-    setShowForm(!showForm)
-
-    handleEdit(meal_id, item_id, data)
-  }
+  const [handleFormSubmit, handleDelete, handleEdit] = useSubmitForm();
 
   const [authState, authDispatch] = useAuthStore();
 
@@ -44,13 +37,9 @@ const WeeklyMenuView = () => {
   };
 
   useEffect(() => {
-    // meals(authState.isAuthenticated, authDispatch).then((res) => {
-    //   fetchData(authState.isAuthenticated, res);
-    // });
-    fetchData(authState.isAuthenticated, authState.menu_id)
-  }, [authState, state]);
-
-  
+    fetchData(authState.isAuthenticated, authState.menu_id);
+    console.log(authState);
+  }, [authState.authenticated, authState.menu_id, state]);
 
   const days = getCurrentDaysOfWeek();
 
@@ -81,14 +70,14 @@ const WeeklyMenuView = () => {
           </div>
           <div className="service-content-container">
             <div className="service-render-container">
-               <RenderMeals
+              <RenderMeals
                 formArray={input}
                 dayIndex={i}
                 date={day}
                 serviceType={"lunch"}
                 meals={currentMeals}
-                handleClick={handleDelete}
-                handleEdit={showFormOnEdit}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
               />
             </div>
             <div className="service-form-container">
@@ -98,7 +87,6 @@ const WeeklyMenuView = () => {
                 day={day}
                 servType="lunch"
                 currentMeals={currentMeals}
-                handleEdit={showFormOnEdit}
               />
             </div>
           </div>
@@ -122,6 +110,8 @@ const WeeklyMenuView = () => {
                 date={day}
                 serviceType={"dinner"}
                 meals={currentMeals}
+                onDelete={handleDelete}
+                onEdit={handleEdit}
               />
             </div>
             <div className="service-form-container">
@@ -130,6 +120,7 @@ const WeeklyMenuView = () => {
                 dayIndex={i}
                 servType="dinner"
                 day={day}
+                currentMeals={currentMeals}
               />
             </div>
           </div>

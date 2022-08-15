@@ -3,6 +3,8 @@ import moment from "moment";
 import vegLogo from "../../../assets/vegetarianIcon.png";
 import glutenLogo from "../../../assets/glutenFree.png";
 import dairyFree from "../../../assets/dairyfree.png";
+import Meals from "../../menu/meals/Meals";
+import "./renderClientMeals.scss";
 
 const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
   useEffect(() => {}, [meals]);
@@ -14,12 +16,12 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
       })
     : null;
 
-  const mealData = data
+  const meal = data
     ? data.map((item, i) => {
         return item.items.map((meal) => {
           return (
             <div
-              className="mealsContainer"
+              className="clientMealsContainer"
               key={meal.id}
               style={{
                 border:
@@ -27,36 +29,50 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
                     ? "1px solid green"
                     : "1px solid yellow",
               }}
-                >
-              <div className="meal_item_container">
-                <h3 className="meal_items">
-                  {meal?.type === "entre" ? meal?.name : null}
-                </h3>
-                <h4 className="meal_items">
-                  {meal?.type === "side" ? meal?.name : null}
-                </h4>
-                <h5 className="meal_items">
-                  {meal?.type === "other" ? meal?.name : null}
-                </h5>
+            >
+              {meal?.url ? (
+                <div className="client_meal_image_container">
+                  {meal?.url ? (
+                    <img
+                      style={{ maxWidth: "100%" }}
+                      className="client_meal_image"
+                      src={meal?.url}
+                      alt={meal?.name}
+                    />
+                  ) : null}
+                </div>
+              ) : null}
+              <div className="client_meal_item_container">
+                {meal?.type === "entre" ? (
+                  <h4 className="client_meal_items">{meal?.name}</h4>
+                ) : null}
+
+                {meal?.type === "side" ? (
+                  <h4 className="client_meal_items">{meal?.name}</h4>
+                ) : null}
+
+                {meal?.type === "other" ? (
+                  <h4 className="client_meal_items">{meal?.name}</h4>
+                ) : null}
               </div>
-              <div className="diets_logo_container">
+              <div className="client_diets_logo_container">
                 {meal?.is_vegetarian ? (
                   <img
-                    className="diets-imgs"
+                    className="client_diets-imgs"
                     alt="vegetarian icon"
                     src={vegLogo}
                   />
                 ) : null}
                 {meal?.is_gluten_free ? (
                   <img
-                    className="diets-imgs"
+                    className="client_diets-imgs"
                     alt="vegetarian icon"
                     src={glutenLogo}
                   />
                 ) : null}
                 {meal?.is_dairy_free ? (
                   <img
-                    className="diets-imgs"
+                    className="client_diets-imgs"
                     alt="vegetarian icon"
                     src={dairyFree}
                   />
@@ -67,7 +83,7 @@ const RenderMeals = ({ date, serviceType, dayIndex, formArray, meals }) => {
         });
       })
     : null;
-  return <div>{mealData}</div>;
+  return <div className="client_meal_wrapper">{meal}</div>;
 };
 
 export default RenderMeals;

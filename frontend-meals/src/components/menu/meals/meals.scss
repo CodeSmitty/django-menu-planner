@@ -28,21 +28,18 @@
 }
 
 .meal-image {
-  position:relative;
-  width:70px;
+  position: relative;
+  width: 70px;
   object-fit: contain;
-  padding:2px;
+  padding: 2px;
   transition: all 1s ease-out;
-  
-   cursor: pointer;
+
+  cursor: pointer;
 }
 
-.meal-image:hover{
-     z-index:999;
-    transform:scale(3.5) translateX(30px);
-    
-   
-    
+.meal-image:hover {
+  z-index: 999;
+  transform: scale(3.5) translateX(30px);
 }
 
 .meal_items {

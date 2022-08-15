@@ -1,7 +1,12 @@
 import React, { Children, createContext, useContext } from "react";
 import moment from "moment";
 
-const WeeklyView = ({ currentWeekStart, currentWeekEnd, children }) => {
+const WeeklyView = ({
+  currentWeekStart,
+  currentWeekEnd,
+  children,
+  myCalendar,
+}) => {
   const getCurrentDaysOfWeek = () => {
     let days = [];
     let day = currentWeekStart;
@@ -14,9 +19,7 @@ const WeeklyView = ({ currentWeekStart, currentWeekEnd, children }) => {
 
   const days = getCurrentDaysOfWeek();
 
-  Children.map((x, i) => {
-    console.log(x);
-  });
+  Children.map((x, i) => {});
   const eachDayOfTheWeek = days.map((day, i) => {
     return (
       <div key={i} className="day-container">
@@ -24,7 +27,6 @@ const WeeklyView = ({ currentWeekStart, currentWeekEnd, children }) => {
         {React.Children.map(children, (child, index) => {
           return (
             <div className="serviceType-container">
-                
               <div className="service-content-container">
                 <div className="service-render-container">
                   {React.cloneElement(child, { date: day })}

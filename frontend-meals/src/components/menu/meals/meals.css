@@ -44,23 +44,20 @@
 }
 
 .meal-image {
+  position: relative;
   width: 70px;
   -o-object-fit: contain;
      object-fit: contain;
-  padding: 5px;
-  -webkit-transition: all .4s ease-in;
-  transition: all .4s ease-in;
+  padding: 2px;
+  -webkit-transition: all 1s ease-out;
+  transition: all 1s ease-out;
+  cursor: pointer;
 }
 
 .meal-image:hover {
-  cursor: pointer;
-  position: absolute;
-  top: -25px;
-  left: -35px;
-  width: 300px;
-  height: auto;
-  display: block;
   z-index: 999;
+  -webkit-transform: scale(3.5) translateX(30px);
+          transform: scale(3.5) translateX(30px);
 }
 
 .meal_items {
@@ -85,4 +82,4 @@
       -ms-flex: 0 0 15%;
           flex: 0 0 15%;
 }
-/*# sourceMappingURL=rendermeals.css.map */
+/*# sourceMappingURL=meals.css.map */

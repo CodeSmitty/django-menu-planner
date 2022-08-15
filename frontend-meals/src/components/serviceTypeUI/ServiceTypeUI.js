@@ -3,6 +3,7 @@ import moment from "moment";
 import FormFields from "../serviceForm/formfields/Formfields";
 
 const ServiceTypeUI = ({ formArray, dayIndex, day, servType, currentMeals, handleClick, handleEdit}) => {
+
   const date = moment(day).format("YYYY-MM-DD");
   const serviceType = formArray
     ? formArray.map((element, i) => {

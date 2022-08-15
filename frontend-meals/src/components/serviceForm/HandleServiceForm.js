@@ -2,12 +2,12 @@ import React from 'react';
 import WeeklyMenuView from '../menu/WeekMenuView';
 
 
-const HandleServiceForm = () =>{
+const HandleServiceForm = ({calendarDates}) =>{
 
      
     
     return(<div>
-      <WeeklyMenuView />
+      <WeeklyMenuView calendarDates={calendarDates} />
     </div>)
 }
 

@@ -5,11 +5,10 @@ import moment from "moment";
 const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
   const [currentMeals, setCurrentMeals] = useState();
 
-  
-  const fetchData = async ( isAuthenticated, id) => {
-    if (isAuthenticated) {
+  const fetchData = async (isAuthenticated, id) => {
+    console.log(id)
+    if (isAuthenticated && id) {
       try {
-       
         const res = await axios.get(
           `http://localhost:3000/api/menus/${id}/meals/?for_date=${await moment(
             currentWeekstart
@@ -19,22 +18,16 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
         if (res.error) {
           console.log(res.error);
         } else if (res.data) {
-          const data = res?.data
-            setCurrentMeals(data)
+          const data = res?.data;
+          setCurrentMeals(data);
         }
       } catch (error) {
         console.log(error);
       }
     }
-  
   };
 
-  
-
-  return [
-    fetchData,
-    currentMeals,
-  ];
+  return [fetchData, currentMeals];
 };
 
 export default useFetchedDataForm;

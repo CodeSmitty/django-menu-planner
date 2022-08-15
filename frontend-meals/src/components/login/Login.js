@@ -15,6 +15,7 @@ const Login = ({ isAuthenticated }) => {
     password: "",
   });
   const { username, password } = formData;
+  const [isLoading, setIsLoading] = useState(true)
 
   const onChange = (e) => {
     setFormData({ ...formData, [e.target.name]: e.target.value });
@@ -25,20 +26,21 @@ const Login = ({ isAuthenticated }) => {
     e.preventDefault();
 
     login(username, password, dispatch);
-
     checkAuthenticated(dispatch);
+    setIsLoading(false)
   };
 
-  useEffect(() => {}, [state.isAuthenticated, state.role]);
+  useEffect(() => {}, [state.isAuthenticated, state.role, state.menu_id]);
 
-  if (state.isAuthenticated) {
-    if (state.role === "chef") return <Redirect to="/planner" />;
-    else if (state.role === "client") {
-      return <Redirect to="/menu" />;
-    } else {
-      return <Redirect to="/" component={Introduction} />;
-    }
+  
+
+  if(state?.isAuthenticated){
+    if(state?.role === "chef"){
+       return <Redirect to="/dashboard" />
+      }else{
+    return <Redirect to="/" component={Introduction} />
   }
+}
 
   return (
     <div>

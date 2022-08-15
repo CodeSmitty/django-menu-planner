@@ -2,7 +2,6 @@ import Cookies from "js-cookie";
 import axios from "axios";
 
 export const checkAuthenticated = async (dispatch, request) => {
-  
   const config = {
     headers: {
       Accept: "application/json",
@@ -10,6 +9,10 @@ export const checkAuthenticated = async (dispatch, request) => {
       "X-CSRFToken": Cookies.get("csrftoken"),
     },
   };
+  const res = await axios.get(
+    "http://localhost:3000/api/authenticated",
+    config
+  );
 
   try {
     const res = await axios.get(
@@ -17,15 +20,15 @@ export const checkAuthenticated = async (dispatch, request) => {
       config
     );
 
-    
-
     if (res.data.error || res.data.isAuthenticated === "error") {
       console.log("Error: You weren't authenticated my guy.");
     } else if (res.data.isAuthenticated === "success") {
+      console.log("you were authenticated: Auth.js 25");
       const menu_id = await axios.get(
         "http://localhost:3000/api/menus/",
         config
       );
+
       dispatch({
         type: "AUTHENTICATED_SUCCESS",
         user: res.data.user,
@@ -40,7 +43,6 @@ export const checkAuthenticated = async (dispatch, request) => {
 };
 
 export const login = async (username, password, dispatch) => {
-  console.log(username, password)
   const config = {
     headers: {
       Accept: "application/json",
@@ -57,12 +59,10 @@ export const login = async (username, password, dispatch) => {
       body,
       config
     );
- 
 
     if (res.data.success === "isAuthenticated") {
-      console.log("staff: ", res.data);
       const menu_id = await axios.get(
-        "http://localhost:3000/api/menus/",
+        "http://localhost:3000/api/authenticated",
         config
       );
 
@@ -72,7 +72,7 @@ export const login = async (username, password, dispatch) => {
         role: res.data.role,
         level: res.data.role_id,
         user_id: res.data.user_id,
-        menu_id: menu_id?.data[0]?.id,
+        menu_id: menu_id?.data[0]?.user_id,
       });
     }
   } catch (error) {

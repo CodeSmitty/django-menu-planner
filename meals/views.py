@@ -21,7 +21,7 @@ from .pagination import MealPagination
 from .serializers import MenuSerializer, MealSerializer, ClientSerializer, UserSerializer, MealItemSerializer
 
 
-@method_decorator(csrf_exempt, name='dispatch')
+
 class CheckAuthenticatedView(APIView):
     serializer_class = MenuSerializer
     authentication_classes = [SessionAuthentication]
@@ -32,12 +32,14 @@ class CheckAuthenticatedView(APIView):
 
     def get(self, format=None):
         user = self.request.user
+        print("user: ", user)
         try:
             isAuthenticated = user.is_authenticated
             if isAuthenticated:
                 groupName = user.groups.filter(user=user).values()[0]
                 return Response({"isAuthenticated": "success", "user": user.username, "role": groupName['name'], "user_id": user.id})
             else:
+                print("user not auth: ", user)
                 return Response({'isAuthenticated': 'error'})
         except:
             return Response({'error': 'Something went wrong when checking authentication status'})
@@ -124,7 +126,7 @@ class MealItemView(LoginRequiredMixin, viewsets.ModelViewSet):
             if request.method == 'DELETE':
                 if user.is_authenticated and user.has_perm('meals.delete_mealitem'):
                     self.perform_destroy(instance)
-                    return Response({"Success": "You have succesfully deleted meal item."})
+                    return Response({"success": "You have succesfully deleted meal item."})
                 return Response({'Failure': 'You do not have permission to make this request. Please refer to admin'})
         except:
             return Response({'Error': self.request.error.message})
@@ -148,7 +150,7 @@ class MealItemView(LoginRequiredMixin, viewsets.ModelViewSet):
                     self.perform_update(serializer)
                     
                     print('update')
-                    return Response({'Success':'You have succesfully updated meal.', 'data':serializer.data})
+                    return Response({'success':'You have succesfully updated meal.'})
         except:
             return Response({'error': 'error'})
 
@@ -178,7 +180,6 @@ class LoginView(APIView):
                 groupName = user.groups.filter(user=user).values()[0]
                 group_perms = user.get_group_permissions()
                 if user.has_perm('meals.change_meal'):
-                    print(user)
                     return Response({"success": "isAuthenticated", "role": groupName['name'], "user": user.username, 'user_id': user.id})
                 if user.has_perm('meals.view_meal'):
                     print(user)
