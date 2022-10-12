@@ -46,7 +46,8 @@ INSTALLED_APPS = [
     'frontend_meals',
     'corsheaders',
     'user_profile',
-    'rest_framework.authtoken'
+    'rest_framework.authtoken',
+    'gunicorn'
 ]
 
 
