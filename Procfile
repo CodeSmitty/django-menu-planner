@@ -1,1 +1,1 @@
-web:gunicorn django-menu-planner.menu_planner.wsgi --log-file -
+web:gunicorn django-menu-planner.menu_planner.wsgi --log-file-
