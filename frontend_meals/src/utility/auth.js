@@ -10,13 +10,13 @@ export const checkAuthenticated = async (dispatch, request) => {
     },
   };
   const res = await axios.get(
-    "http://localhost:3000/api/authenticated",
+    "https://greek-menu-planner.herokuapp.com/api/authenticated",
     config
   );
 
   try {
     const res = await axios.get(
-      "http://localhost:3000/api/authenticated",
+      "https://greek-menu-planner.herokuapp.com/api/authenticated",
       config
     );
 
@@ -25,7 +25,7 @@ export const checkAuthenticated = async (dispatch, request) => {
     } else if (res.data.isAuthenticated === "success") {
       console.log("you were authenticated: Auth.js 25");
       const menu_id = await axios.get(
-        "http://localhost:3000/api/menus/",
+        "https://greek-menu-planner.herokuapp.com/api/menus/",
         config
       );
 
@@ -55,14 +55,14 @@ export const login = async (username, password, dispatch) => {
     const body = JSON.stringify({ username, password });
 
     const res = await axios.post(
-      "http://localhost:3000/api/login",
+      "https://greek-menu-planner.herokuapp.com/api/login",
       body,
       config
     );
 
     if (res.data.success === "isAuthenticated") {
       const menu_id = await axios.get(
-        "http://localhost:3000/api/authenticated",
+        "https://greek-menu-planner.herokuapp.com/api/authenticated",
         config
       );
 
@@ -96,7 +96,7 @@ export const checkLogout = async (dispatch) => {
 
   try {
     const res = await axios.post(
-      "http://localhost:3000/api/logout",
+      "https://greek-menu-planner.herokuapp.com/api/logout",
       body,
       config
     );

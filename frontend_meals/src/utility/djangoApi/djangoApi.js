@@ -13,7 +13,10 @@ export const meals = async (isAuthenticated, dispatch) => {
     };
 
     try {
-      const res = await axios.get("http://localhost:3000/api/menus/", config);
+      const res = await axios.get(
+        "https://greek-menu-planner.herokuapp.com/api/menus/",
+        config
+      );
       if (res) {
         const id = res.data[0].id;
         dispatch({ type: "CHECK_MEAL_ID", id: id, name: res.data[0].name });
@@ -31,7 +34,7 @@ export const getMeals = async (isAuthenticated, dispatch, id, date) => {
   if (isAuthenticated) {
     try {
       const res = await axios.get(
-        `http://localhost:3000/api/menus/${await id}/meals/`
+        `https://greek-menu-planner.herokuapp.com/api/menus/${await id}/meals/`
       );
 
       if (res.data.error) {
