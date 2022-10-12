@@ -100,8 +100,10 @@ CORS_ORIGIN_WHITELIST =[
     "http://127.0.0.1:3000", 
 ]
 
+STATIC_ROOT= os.path.join(BASE_DIR, 'frontend_meals')
+
 STATICFILES_DIRS = (
-    os.path.join(os.path.join(BASE_DIR, 'frontend_meals/static'), "build", "static"),  # update the STATICFILES_DIRS
+    os.path.join(os.path.join(BASE_DIR, 'frontend_meals'), 'build', 'static'),  # update the STATICFILES_DIRS
 )
 
 WSGI_APPLICATION = 'menu_planner.wsgi.application'
