@@ -10,7 +10,7 @@ const useFetchedDataForm = (currentWeekstart, currentWeekEnd) => {
     if (isAuthenticated && id) {
       try {
         const res = await axios.get(
-          `http://localhost:3000/api/menus/${id}/meals/?for_date=${await moment(
+          `https://greek-menu-planner.herokuapp.com/api/menus/${id}/meals/?for_date=${await moment(
             currentWeekstart
           ).format("YYYY-MM-DD")}&scope=week`
         );

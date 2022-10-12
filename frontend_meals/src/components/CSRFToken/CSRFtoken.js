@@ -22,7 +22,9 @@ const CSRFToken = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        await axios.get("http://localhost:3000/api/csrf_cookie");
+        await axios.get(
+          "https://greek-menu-planner.herokuapp.com/api/csrf_cookie"
+        );
       } catch (err) {}
     };
 
