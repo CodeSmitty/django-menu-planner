@@ -28,7 +28,7 @@ SECRET_KEY = '_^k34)!8q9y$)s2*sb7&ttr%(%xqj-65l8kqeyv!l1oy8a4=#+'
 DEBUG = True
 
 ALLOWED_HOSTS = ["laptop-3leli9cb", "localhost", '127.0.0.1',
-                 '192.168.1.140', "localhost:3000", "http://localhost:3000","https://greek-menu-planner.herokuapp.com/"]
+                 '192.168.1.140', "localhost:3000", "http://localhost:3000","greek-menu-planner.herokuapp.com"]
 
 
 # Application definition
