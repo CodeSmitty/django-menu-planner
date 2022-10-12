@@ -43,7 +43,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'rest_framework',
-    'frontend-meals',
+    'frontend_meals',
     'corsheaders',
     'user_profile',
     'rest_framework.authtoken'
@@ -77,7 +77,7 @@ CSRF_COOKIE_HTTPONLY = False
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, "frontend-meals")],
+        'DIRS': [os.path.join(BASE_DIR, "frontend_meals")],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -101,7 +101,7 @@ CORS_ORIGIN_WHITELIST =[
 ]
 
 STATICFILES_DIRS = (
-    os.path.join(os.path.join(BASE_DIR, 'frontend-meals'), "build", "static"),  # update the STATICFILES_DIRS
+    os.path.join(os.path.join(BASE_DIR, 'frontend_meals'), "build", "static"),  # update the STATICFILES_DIRS
 )
 
 WSGI_APPLICATION = 'menu_planner.wsgi.application'
