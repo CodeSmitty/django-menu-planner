@@ -47,7 +47,6 @@ INSTALLED_APPS = [
     'corsheaders',
     'user_profile',
     'rest_framework.authtoken',
-    'gunicorn'
 ]
 
 
