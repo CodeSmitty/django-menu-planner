@@ -57,7 +57,7 @@ const AdminDashboard = ({children})=>{
                 <li className="nav-li">
                   <NavLink className="active-links" to="#">
                     View Menu
-                  </NavLink>
+                  </NavLink> 
                 </li>
               </ul>
             </div>
