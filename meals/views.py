@@ -203,6 +203,7 @@ class LogoutView(APIView):
 
 
 def index(request):
+    print(request)
     return render(request, 'build/index.html')
 
 
