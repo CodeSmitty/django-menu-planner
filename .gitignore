@@ -131,3 +131,4 @@ dmypy.json
 
 #frontend node-modules
 ./frontend_meals/node_modules
+./node_modules
